@@ -1,6 +1,6 @@
 import Datetime from "react-datetime";
 import ja  from "moment";
-import { FormPropsType, TimeSpecType } from "../types";
+import { RoutePropsType, TimeSpecType } from "../types";
 import Via from "./Via";
 
 type radioOptionType = {
@@ -8,7 +8,7 @@ type radioOptionType = {
     text: string,
 }
 
-const Query = ({ viaCount, setViaCount, query, handleSubmit }: FormPropsType) => {
+const Route = ({ viaCount, setViaCount, route, handleSubmit }: RoutePropsType) => {
     const radioOptions: radioOptionType[] = [
         {value: "departure", text: "出発"}, 
         {value: "arrival", text: "到着"}, 
@@ -23,29 +23,29 @@ const Query = ({ viaCount, setViaCount, query, handleSubmit }: FormPropsType) =>
         return str
     };
     
-    console.log(viaCount, query);  // Test 
+    console.log(viaCount, route);  // Test 
     
     return (
         <form id="search" onSubmit={handleSubmit}>
-            <input type="text" name="origin" placeholder="出発駅・バス停・施設" onChange={e => query.setOrigin(e.target.value)} />
-            <input type="text" name="destination" placeholder="到着駅・バス停・施設" onChange={e => query.setDestination(e.target.value)} />
-            <input type="datetime-local" name="datetime" value={toISOStringInJpTime(query.datetime)} onChange={e => query.setDatetime(new Date(e.target.value))} />
+            <input type="text" name="origin" placeholder="出発駅・バス停・施設" onChange={e => route.setOrigin(e.target.value)} />
+            <input type="text" name="destination" placeholder="到着駅・バス停・施設" onChange={e => route.setDestination(e.target.value)} />
+            <input type="datetime-local" name="datetime" value={toISOStringInJpTime(route.datetime)} onChange={e => route.setDatetime(new Date(e.target.value))} />
             
             {radioOptions.map((option) => (
                 <label key={option.value}>
                     <input
                         type="radio"
                         value={option.value}
-                        name={option.value}
-                        onChange={() => query.setTimeSpec(option.value)}
+                        name="time-spec"
+                        onChange={() => route.setTimeSpec(option.value)}
                     />
-                    {option .text}
+                    {option.text}
                 </label>
             ))}
             
-            <Via viaCount={viaCount} setViaCount={setViaCount} vias={query.vias} setVias={query.setVias} />
+            <Via viaCount={viaCount} setViaCount={setViaCount} vias={route.vias} setVias={route.setVias} />
         </form>
     );
 };
 
-export default Query;
+export default Route;

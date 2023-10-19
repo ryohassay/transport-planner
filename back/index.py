@@ -1,12 +1,23 @@
 from typing import Dict, List
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 from datetime import datetime as dt
 from datetime import time as tm
+from flask_cors import CORS
 
 from route import RouteSearch, Route
 from parser import Parser
 
-app = Flask(__name__)
+
+app = Flask(__name__, template_folder='../front/build', static_folder='../front/build/static')
+# app.add_url_rule('/', 'root', lambda: app.send_static_file('index.html'))
+CORS(app)
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:5000')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,POST')
+    return response
 
 
 def _convert_tm_type(tm_type_str):
@@ -73,39 +84,45 @@ def _convert_route_for_js(route: Route) -> List[Dict]:
 def index():
     return render_template("index.html", error_msg=None)
 
+# @app.route('/')
+# def index():
+#     return send_from_directory('../front', 'public/index.html')
+
 
 @app.route("/", methods=['post'])
 def result():
+    print(request.get_json())
+    
     routes_js = []
-    for i in range(5):
-        ip_start = request.form["ip[{}]['start']".format(i)]
-        ip_dest = request.form["ip[{}]['dest']".format(i)]
-        ip_tm_type = request.form["ip[{}]['tm_type']".format(i)]
-        ip_date = request.form["ip[{}]['date']".format(i)]
-        ip_time = request.form["ip[{}]['time']".format(i)]
+    # for i in range(5):
+    #     ip_start = request.form["ip[{}]['start']".format(i)]
+    #     ip_dest = request.form["ip[{}]['dest']".format(i)]
+    #     ip_tm_type = request.form["ip[{}]['tm_type']".format(i)]
+    #     ip_date = request.form["ip[{}]['date']".format(i)]
+    #     ip_time = request.form["ip[{}]['time']".format(i)]
 
-        if ip_start != "" and ip_dest != "":
-            if ip_time == '':
-                ip_dt = dt.now()
-            elif ip_date == '':
-                today = dt.today()
-                time = tm.fromisoformat(ip_time)
-                ip_dt = dt.combine(today, time)
-            else:
-                ip_dt = dt.strptime('{} {}'.format(ip_date, ip_time), '%Y-%m-%d %H:%M')
+    #     if ip_start != "" and ip_dest != "":
+    #         if ip_time == '':
+    #             ip_dt = dt.now()
+    #         elif ip_date == '':
+    #             today = dt.today()
+    #             time = tm.fromisoformat(ip_time)
+    #             ip_dt = dt.combine(today, time)
+    #         else:
+    #             ip_dt = dt.strptime('{} {}'.format(ip_date, ip_time), '%Y-%m-%d %H:%M')
 
-            ip_tm_type_int = _convert_tm_type(ip_tm_type)
-            route = _search_transit(ip_start, ip_dest, ip_dt, ip_tm_type_int)
+    #         ip_tm_type_int = _convert_tm_type(ip_tm_type)
+    #         route = _search_transit(ip_start, ip_dest, ip_dt, ip_tm_type_int)
 
-            if route is None:
-                error_msg = '出発地または到着地が正しくありません。'
-                return render_template("index.html", error_msg=error_msg)
+    #         if route is None:
+    #             error_msg = '出発地または到着地が正しくありません。'
+    #             return render_template("index.html", error_msg=error_msg)
 
-            # Rearrange the object to list of dictionaries
-            route_js = _convert_route_for_js(route)
-            routes_js.append(route_js)
+    #         # Rearrange the object to list of dictionaries
+    #         route_js = _convert_route_for_js(route)
+    #         routes_js.append(route_js)
 
-    return render_template("results.html", routes=routes_js)
+    return render_template("index.html", routes=routes_js)
     # return render_template("index.html")
 
 
