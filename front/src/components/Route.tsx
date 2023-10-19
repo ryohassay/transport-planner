@@ -31,18 +31,20 @@ const Route = ({ viaCount, setViaCount, index, route, handleSubmit }: RouteProps
             <input type="text" name="destination" placeholder="到着駅・バス停・施設" onChange={e => route.setDestination(e.target.value)} />
             <input type="datetime-local" name="datetime" value={toISOStringInJpTime(route.datetime)} onChange={e => route.setDatetime(new Date(e.target.value))} />
             
+            <div className="radio-container">
             {radioOptions.map((option) => (
-                <label key={option.value}>
-                    <input
-                        type="radio"
-                        value={option.value}
-                        name={"time-spec-" + index}
-                        onChange={() => route.setTimeSpec(option.value)}
-                        checked={option.value === "departure"}
-                    />
-                    {option.text}
-                </label>
-            ))}
+                    <label key={option.value}>
+                        <input
+                            type="radio"
+                            value={option.value}
+                            name={"time-spec-" + index}
+                            onChange={() => route.setTimeSpec(option.value)}
+                            checked={option.value === "departure"}
+                        />
+                        {option.text}
+                    </label>
+                ))}
+            </div>
             
             <Via viaCount={viaCount} setViaCount={setViaCount} vias={route.vias} setVias={route.setVias} />
         </div>

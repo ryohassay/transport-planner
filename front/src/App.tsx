@@ -66,12 +66,11 @@ function App() {
     const handleSubmit= (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(e.target);  // Test
+        console.log(routeCount, query);  // Test
 
         const response = axios.post("http://127.0.0.1:5000/", query)
         .catch(err => console.log(err));
     };
-    
-    console.log(routeCount, query);
 
     return (
         <div className="App">
