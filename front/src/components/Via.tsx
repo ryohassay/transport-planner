@@ -1,4 +1,5 @@
 import { ViaPropsType, ViaListType } from "../types";
+import { NUM_VIAS } from "../consts";
 
 
 const Via = ({ viaCount, setViaCount, vias, setVias }: ViaPropsType) => {
@@ -37,7 +38,7 @@ const Via = ({ viaCount, setViaCount, vias, setVias }: ViaPropsType) => {
                 }
             </ul>
             
-            <button type="button" onClick={addVia} disabled={viaCount >= 3}>経由地を追加</button>
+            <button type="button" onClick={addVia} disabled={viaCount >= NUM_VIAS}>経由地を追加</button>
         </div>
         
         

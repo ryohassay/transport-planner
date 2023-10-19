@@ -36,6 +36,8 @@ export type ViaPropsType = {
 }
 
 export type RouteType = {
+    index: number | null,
+    setIndex: React.Dispatch<React.SetStateAction<number | null>>
     origin: string,
     setOrigin: React.Dispatch<React.SetStateAction<string>>,
     destination: string,
@@ -75,6 +77,7 @@ export type FormPropsType = {
 export type RoutePropsType ={
     viaCount: number
     setViaCount: React.Dispatch<React.SetStateAction<number>>,
+    index: number | null,
     route: RouteType,
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
 }

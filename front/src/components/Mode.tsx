@@ -33,10 +33,10 @@ const Mode = ({ modes, setModes }: ModePropsType) => {
             {radioOptions.map((option) => (
                 <label key={option.value}>
                     <input
-                        type="radio"
+                        type="checkbox"
                         value={option.value}
                         name="preferred-modes"
-                        onChange={() => setMode(modes, option.value)}
+                        onChange={(e) => setMode(modes, (Number(e.target.value) as unknown as (keyof modesType)))}
                     />
                     {option.text}
                 </label>
