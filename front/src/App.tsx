@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import axios from "axios";
 import "react-datetime/css/react-datetime.css";
 import './App.css';
 import Form from "./components/Form";
-import { TimeSpecType, ViaType, ViaListType, RouteType, QueryType, optionsType, modesType } from "./types";
+import { TimeSpecType, ViaListType, RouteType, QueryType, modesType } from "./types";
 import { NUM_ROUTES } from "./consts";
 
 function App() {
