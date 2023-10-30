@@ -7,31 +7,37 @@ import { TimeSpecType, ViaListType, RouteType, QueryType, modesType } from "./ty
 import { NUM_ROUTES } from "./consts";
 
 function App() {
-    const [viaCount, setViaCount] = useState<number>(0);
+    // const [viaCount, setViaCount] = useState<number>(0);
 
-    const [index, setIndex] = useState<number | null>(null);
-    const [origin, setOrigin] = useState<string>("");
-    const [destination, setDestination] = useState<string>("");
-    const [datetime, setDatetime] = useState<Date>(new Date());
-    const [timeSpec, setTimeSpec] = useState<TimeSpecType>("departure");
-    const [vias, setVias] = useState<ViaListType>(["", "", ""]);
+    // const [index, setIndex] = useState<number | null>(null);
+    // const [origin, setOrigin] = useState<string>("");
+    // const [destination, setDestination] = useState<string>("");
+    // const [datetime, setDatetime] = useState<Date>(new Date());
+    // const [timeSpec, setTimeSpec] = useState<TimeSpecType>("departure");
+    // const [vias, setVias] = useState<ViaListType>(["", "", ""]);
+
+    // const [route, setRoute] = useState({
+    //     index: null,
+    //     origin: "",
+    //     destination: "",
+    //     datetime: new Date(),
+    //     timeSpec: "departure",
+    //     trPoints: ["", "", ""],  // Max three transit points
+    // });
 
     const route: RouteType = {
-        index: index,
-        setIndex: setIndex,
-        origin: origin,
-        setOrigin: setOrigin,
-        destination: destination,
-        setDestination: setDestination,
-        datetime: datetime,
-        setDatetime: setDatetime,
-        timeSpec: timeSpec,
-        setTimeSpec: setTimeSpec,
-        vias: vias,
-        setVias: setVias,
+        index: null,
+        origin: "",
+        destination: "",
+        datetime: new Date(),
+        timeSpec: "departure",
+        waypointIds: [],
     };
 
-    const [routes, setRoutes] = useState<RouteType[]>(new Array<RouteType>(NUM_ROUTES).fill(route));
+    const [waypoints, setWaypoints] = useState<any[]>([]);
+
+    // const [routes, setRoutes] = useState<RouteType[]>(new Array<RouteType>(NUM_ROUTES).fill(route));
+    const [routes, setRoutes] = useState<RouteType[]>([route]);
 
     const [modes, setModes] = useState<modesType>({
         al: true,
@@ -53,28 +59,31 @@ function App() {
         setOrder: setOrder,
     };
 
-    const query: QueryType = {
-        viaCount: viaCount,
-        setViaCount: setViaCount,
-        routes: routes,
-        setRoutes: setRoutes,
-        options: options,
-    };
-
-    const [routeCount, setRouteCount] = useState<number>(1);
-
     const handleSubmit= (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(e.target);  // Test
-        console.log(routeCount, query);  // Test
+        
+        console.log(query);  // Test
 
         const response = axios.post("http://127.0.0.1:5000/", query)
         .catch(err => console.log(err));
     };
 
+    const query = {
+        routes: routes,
+        setRoutes: setRoutes,
+        waypoints: waypoints,
+        setWaypoints: setWaypoints,
+        modes: modes,
+        setModes: setModes,
+        speed: speed,
+        setSpeed: setSpeed,
+        order: order,
+        setOrder: setOrder,
+    }
+
     return (
         <div className="App">
-            <Form query={query} routeCount={routeCount} setRouteCount={setRouteCount} handleSubmit={handleSubmit}/>
+            <Form {...query} handleSubmit={handleSubmit}/>
         </div>
     );
 }
