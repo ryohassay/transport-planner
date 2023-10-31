@@ -5,7 +5,7 @@ from datetime import time as tm
 from flask_cors import CORS
 
 from route import RouteSearch, Route
-from parser import Parser
+from arg_parser import Parser
 
 
 app = Flask(__name__, template_folder='../front/build', static_folder='../front/build/static')
@@ -132,6 +132,6 @@ def result():
 
 
 if __name__ == '__main__':
-    purser = Parser()
-    args = purser.get_args()
+    parser = Parser()
+    args = parser.get_args()
     app.run(debug=args.debug, host=args.host)

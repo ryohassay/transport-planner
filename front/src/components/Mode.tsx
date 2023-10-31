@@ -21,13 +21,14 @@ const Mode = ({ modes, setModes }: ModePropsType) => {
         {value: keys[5], text: "フェリー"}
     ];
 
-    const setMode = (prevModes: modesType, key: (keyof modesType)) => {
+    const setMode = (key: (keyof modesType)) => {
+        console.log(key, !modes[key]);  // Test
         setModes((prevModes) => ({
             ...prevModes,
-            key: !(prevModes[key])
-        }))
+            [key]: !(prevModes[key])
+        }));
     };
-    
+
     return (
         <div>
             {radioOptions.map((option) => (
@@ -36,7 +37,9 @@ const Mode = ({ modes, setModes }: ModePropsType) => {
                         type="checkbox"
                         value={option.value}
                         name="preferred-modes"
-                        onChange={(e) => setMode(modes, (Number(e.target.value) as unknown as (keyof modesType)))}
+                        onChange={(e) => setMode(e.target.value as (keyof modesType))}
+                        // onChange={(e) => showEValue(e.target.value)}
+                        checked={modes[option.value]}
                     />
                     {option.text}
                 </label>
