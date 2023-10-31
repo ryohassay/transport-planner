@@ -1,21 +1,28 @@
-import { useState } from "react";
-import { RoutePropsType, ViaListType } from "../types";
+import { useState, useId } from "react";
+import { WaypointPropsType } from "../types";
 import { NUM_WAYPOINTS } from "../consts";
 
 
-const Waypoint = ({ index, routes, setRoutes, waypoints, setWaypoints }: RoutePropsType) => {
+const Waypoint = ({ routeId, routes, setRoutes, waypoints, setWaypoints, idList, setIdList }: WaypointPropsType) => {
     const [waypointCount, setWaypointCount] = useState<number>(0);
     
     const addWaypoint = () => {
+        const id = useId()
         setWaypoints([
             ...waypoints, 
             {
-                id: (new Date()).valueOf(),
+                id: id,
                 text: "",
-                parentId: index,
+                routeId: routeId,
             }
         ]);
-        
+        // setIdList([...idList, {
+        //     routeId: routeId,
+        //     waypointIds: [
+        //         ..., 
+        //         id
+        //     ],
+        // }]);  // Fix this
         setWaypointCount(prevCount => prevCount + 1);
     };
 
@@ -23,7 +30,7 @@ const Waypoint = ({ index, routes, setRoutes, waypoints, setWaypoints }: RoutePr
         setWaypoints(waypoints.map((waypoint, i) => (i === index ? {
             id: waypoint.id,
             text: value,
-            parentId: waypoint.parentId
+            routeId: waypoint.routeId
         } : waypoint)));
     };
     
@@ -35,7 +42,7 @@ const Waypoint = ({ index, routes, setRoutes, waypoints, setWaypoints }: RoutePr
                         <li key={index}>
                             <dl>
                                 <dt>経由{index + 1}</dt>
-                                <dd><input type="text" name={"waypoint" + index} placeholder="経由地" onChange={e => setWaypoint(index, e.target.value)} /></dd>
+                                <dd><input type="text" name={"waypoint-" + index} placeholder="経由地" onChange={e => setWaypoint(index, e.target.value)} /></dd>
                             </dl>
                         </li>
                     );

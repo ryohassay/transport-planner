@@ -29,12 +29,11 @@ export type ViaType = string | undefined
 export type ViaListType = ViaType[]
 
 export type RouteType = {
-    index: number | null,
+    id: string,
     origin: string,
     destination: string,
     datetime: Date,
     timeSpec: TimeSpecType,
-    waypointIds: number[],
 }
 
 export type optionsType = {
@@ -57,20 +56,46 @@ export type QueryType = {
 export type WaypointType = {
     id: number,
     text: string,
-    parentId: number,
+    routeId: number,
+}
+
+export type IdSetType = {
+    routeId: string,
+    waypointIds: string[],
 }
 
 export type FormPropsType = {
-    viaCount: number, 
-    setViaCount: React.Dispatch<React.SetStateAction<number>>,
-    query: QueryType,
+    routes: RouteType[],
+    setRoutes: React.Dispatch<React.SetStateAction<RouteType[]>>,
+    waypoints: WaypointType[],
+    setWaypoints: React.Dispatch<React.SetStateAction<WaypointType[]>>,
+    idList: IdSetType[], 
+    setIdList: React.Dispatch<React.SetStateAction<IdSetType[]>>,
+    modes: modesType,
+    setModes: React.Dispatch<React.SetStateAction<modesType>>,
+    speed: number | null,
+    setSpeed: React.Dispatch<React.SetStateAction<number | null>>,
+    order: number | null,
+    setOrder: React.Dispatch<React.SetStateAction<number | null>>,
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
 }
 
 export type RoutePropsType ={
-    index: number,
+    routeIndex: number,
     routes: RouteType[];
     setRoutes: React.Dispatch<React.SetStateAction<RouteType[]>>;
     waypoints: WaypointType[];
     setWaypoints: React.Dispatch<React.SetStateAction<any[]>>,
+    idList: IdSetType[], 
+    setIdList: React.Dispatch<React.SetStateAction<IdSetType[]>>,
+}
+
+export type WaypointPropsType ={
+    routeId: string,
+    routes: RouteType[];
+    setRoutes: React.Dispatch<React.SetStateAction<RouteType[]>>;
+    waypoints: WaypointType[];
+    setWaypoints: React.Dispatch<React.SetStateAction<any[]>>,
+    idList: IdSetType[], 
+    setIdList: React.Dispatch<React.SetStateAction<IdSetType[]>>,
 }

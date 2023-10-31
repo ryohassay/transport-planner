@@ -8,7 +8,7 @@ type radioOptionType = {
     text: string,
 }
 
-const Route = ({index, routes, setRoutes, waypoints, setWaypoints}: RoutePropsType) => {
+const Route = ({ routeIndex, routes, setRoutes, waypoints, setWaypoints, idList, setIdList }: RoutePropsType) => {
     const radioOptions: radioOptionType[] = [
         {value: "departure", text: "出発"}, 
         {value: "arrival", text: "到着"}, 
@@ -27,15 +27,25 @@ const Route = ({index, routes, setRoutes, waypoints, setWaypoints}: RoutePropsTy
 
     const updateState = (member: any, newValue: any) => {
         setRoutes(
-            routes.map((route, i) => (i === index ? {...route, [member]: newValue} : route))
+            routes.map((route, i) => (i === routeIndex ? {...route, [member]: newValue} : route))
         );
-    }
+    };
+
+    const waypointProps = {
+        routeId: routes[routeIndex].id,
+        routes: routes,
+        setRoutes: setRoutes,
+        waypoints: waypoints,
+        setWaypoints: setWaypoints,
+        idList: idList,
+        setIdList:setIdList
+    };
 
     return (
         <div className="route">
             <input type="text" name="origin" placeholder="出発駅・バス停・施設" onChange={e => updateState("origin", e.target.value)} />
             <input type="text" name="destination" placeholder="到着駅・バス停・施設" onChange={e => updateState("destination", e.target.value)} />
-            <input type="datetime-local" name="datetime" value={toISOStringInJpTime(routes[index].datetime)} onChange={e => updateState("datetime", new Date(e.target.value))} />
+            <input type="datetime-local" name="datetime" value={toISOStringInJpTime(routes[routeIndex].datetime)} onChange={e => updateState("datetime", new Date(e.target.value))} />
             
             <div className="radio-container">
                 {radioOptions.map(option => (
@@ -43,16 +53,16 @@ const Route = ({index, routes, setRoutes, waypoints, setWaypoints}: RoutePropsTy
                         <input
                             type="radio"
                             value={option.value}
-                            name={"time-spec-" + index}
+                            name={"time-spec-" + routeIndex}
                             onChange={() => updateState("timeSpec", option.value)}
-                            checked={option.value === routes[index].timeSpec}
+                            checked={option.value === routes[routeIndex].timeSpec}
                         />
                         {option.text}
                     </label>
                 ))}
             </div>
             
-            <Waypoint index={index} routes={routes} setRoutes={setRoutes} waypoints={waypoints} setWaypoints={setWaypoints} />
+            <Waypoint {...waypointProps} />
         </div>
     );
 };
