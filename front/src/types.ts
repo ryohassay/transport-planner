@@ -28,12 +28,6 @@ export type ViaType = string | undefined
 
 export type ViaListType = ViaType[]
 
-export type ViaPropsType = {
-    waypointCount: number,
-    waypoints: any[],
-    setWaypoints: React.Dispatch<React.SetStateAction<any[]>>,
-}
-
 export type RouteType = {
     index: number | null,
     origin: string,
@@ -60,6 +54,12 @@ export type QueryType = {
     options: optionsType,
 }
 
+export type WaypointType = {
+    id: number,
+    text: string,
+    parentId: number,
+}
+
 export type FormPropsType = {
     viaCount: number, 
     setViaCount: React.Dispatch<React.SetStateAction<number>>,
@@ -68,10 +68,9 @@ export type FormPropsType = {
 }
 
 export type RoutePropsType ={
+    index: number,
     routes: RouteType[];
     setRoutes: React.Dispatch<React.SetStateAction<RouteType[]>>;
-    waypoints: any[];
+    waypoints: WaypointType[];
     setWaypoints: React.Dispatch<React.SetStateAction<any[]>>,
-    index: number,
-    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
 }

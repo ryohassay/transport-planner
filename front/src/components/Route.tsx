@@ -1,14 +1,14 @@
 import Datetime from "react-datetime";
 import ja  from "moment";
 import { RoutePropsType, TimeSpecType } from "../types";
-import Via from "./Via";
+import Waypoint from "./Waypoint";
 
 type radioOptionType = {
     value: TimeSpecType,
     text: string,
 }
 
-const Route = ({routes, setRoutes, waypoints, setWaypoints, index, handleSubmit }: RoutePropsType) => {
+const Route = ({index, routes, setRoutes, waypoints, setWaypoints}: RoutePropsType) => {
     const radioOptions: radioOptionType[] = [
         {value: "departure", text: "出発"}, 
         {value: "arrival", text: "到着"}, 
@@ -38,7 +38,7 @@ const Route = ({routes, setRoutes, waypoints, setWaypoints, index, handleSubmit 
             <input type="datetime-local" name="datetime" value={toISOStringInJpTime(routes[index].datetime)} onChange={e => updateState("datetime", new Date(e.target.value))} />
             
             <div className="radio-container">
-            {radioOptions.map((option) => (
+                {radioOptions.map(option => (
                     <label key={option.value}>
                         <input
                             type="radio"
@@ -52,7 +52,7 @@ const Route = ({routes, setRoutes, waypoints, setWaypoints, index, handleSubmit 
                 ))}
             </div>
             
-            <Via waypointCount={routes[index].waypointIds.length} waypoints={waypoints} setWaypoints={setWaypoints} />
+            <Waypoint index={index} routes={routes} setRoutes={setRoutes} waypoints={waypoints} setWaypoints={setWaypoints} />
         </div>
     );
 };

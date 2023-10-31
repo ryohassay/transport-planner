@@ -3,7 +3,7 @@ import axios from "axios";
 import "react-datetime/css/react-datetime.css";
 import './App.css';
 import Form from "./components/Form";
-import { TimeSpecType, ViaListType, RouteType, QueryType, modesType } from "./types";
+import { TimeSpecType, ViaListType, RouteType, QueryType, modesType, WaypointType } from "./types";
 import { NUM_ROUTES } from "./consts";
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
         waypointIds: [],
     };
 
-    const [waypoints, setWaypoints] = useState<any[]>([]);
+    const [waypoints, setWaypoints] = useState<WaypointType[]>([]);
 
     // const [routes, setRoutes] = useState<RouteType[]>(new Array<RouteType>(NUM_ROUTES).fill(route));
     const [routes, setRoutes] = useState<RouteType[]>([route]);
@@ -80,6 +80,8 @@ function App() {
         order: order,
         setOrder: setOrder,
     }
+
+    console.log(query)
 
     return (
         <div className="App">

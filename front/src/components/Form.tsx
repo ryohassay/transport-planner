@@ -48,8 +48,6 @@ const Form = ({routes, setRoutes, waypoints, setWaypoints, modes, setModes, spee
         order: order,
         setOrder: setOrder
     }
-    
-    console.log(routeQuery, options);  // Test
 
     return (
         <form id="search" onSubmit={handleSubmit}>
@@ -58,7 +56,7 @@ const Form = ({routes, setRoutes, waypoints, setWaypoints, modes, setModes, spee
                     Array.from({length: routes.length}, (_, index) => {
                         return (
                             <li key={index}>
-                                <Route {...routeQuery} index={index} handleSubmit={handleSubmit} />
+                                <Route {...routeQuery} index={index} />
                             </li>
                         );
                     })
