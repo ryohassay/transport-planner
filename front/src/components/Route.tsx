@@ -20,9 +20,9 @@ const Route = ({ routeIndex, routes, setRoutes, waypoints, setWaypoints, idList,
     const keys = Object.keys(routes);
 
     const toISOStringInJpTime = (datetime: Date): string => {
-        let str: string = datetime.toLocaleString("ja", { timeZone: 'Asia/Tokyo' }).padStart(2, '0').replaceAll("/", "-").replace(" ", "T");
-        str = str.slice(0, 16);  // Remove seconds at the end
-        return str
+        let text = datetime.toLocaleString("sv-SE", { timeZone: 'Asia/Tokyo' }).replace(" ", "T");  // Locale sv-SE (Swedish (Sweden)) is the same as ISO format
+        text = text.slice(0, 16);  // Remove seconds at the end
+        return text
     };
 
     const updateState = (member: any, newValue: any) => {
@@ -32,7 +32,8 @@ const Route = ({ routeIndex, routes, setRoutes, waypoints, setWaypoints, idList,
     };
 
     const waypointProps = {
-        routeId: routes[routeIndex].id,
+        // routeId: routes[routeIndex].id,
+        routeIndex: routeIndex,
         routes: routes,
         setRoutes: setRoutes,
         waypoints: waypoints,

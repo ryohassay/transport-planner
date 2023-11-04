@@ -4,7 +4,7 @@ import "react-datetime/css/react-datetime.css";
 import './App.css';
 import Form from "./components/Form";
 import { FormPropsType, RouteType, IdSetType, modesType, WaypointType } from "./types";
-import { NUM_ROUTES } from "./consts";
+import { NUM_ROUTES, NUM_WAYPOINTS } from "./consts";
 
 function App() {
     const route: RouteType = {
@@ -15,7 +15,7 @@ function App() {
         timeSpec: "departure",
     };
 
-    const [waypoints, setWaypoints] = useState<WaypointType[]>([]);
+    const [waypoints, setWaypoints] = useState<WaypointType[]>(new Array<WaypointType>(NUM_ROUTES * NUM_WAYPOINTS).fill({text: ""}));  // indeces 0-2: the first route, 3-5: the second route, ...
 
     // const [routes, setRoutes] = useState<RouteType[]>(new Array<RouteType>(NUM_ROUTES).fill(route));
     const [routes, setRoutes] = useState<RouteType[]>([route]);
@@ -77,7 +77,7 @@ function App() {
         handleSubmit: handleSubmit,
     };
 
-    console.log(routes, waypoints);
+    console.log(routes, waypoints, options);
 
     return (
         <div className="App">

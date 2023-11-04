@@ -6,13 +6,14 @@ import { NUM_ROUTES } from "../consts";
 
 const Form = ({ routes, setRoutes, waypoints, setWaypoints, idList, setIdList, modes, setModes, speed, setSpeed, order, setOrder, handleSubmit }: FormPropsType) => {
     const addRoutes = () => {
+        const id = String((new Date()).valueOf());
         const newRoute: RouteType = {
-            id: useId(),
+            id: id,
             origin: "",
             destination: "",
             datetime: new Date(),
             timeSpec: "departure",
-        }
+        };
 
         setRoutes([...routes, newRoute]);
     };
@@ -24,7 +25,7 @@ const Form = ({ routes, setRoutes, waypoints, setWaypoints, idList, setIdList, m
         setWaypoints: setWaypoints,
         idList: idList,
         setIdList: setIdList
-    }
+    };
 
     const options = {
         modes: modes,
@@ -33,7 +34,7 @@ const Form = ({ routes, setRoutes, waypoints, setWaypoints, idList, setIdList, m
         setSpeed: setSpeed,
         order: order,
         setOrder: setOrder
-    }
+    };
 
     return (
         <form id="search" onSubmit={handleSubmit}>

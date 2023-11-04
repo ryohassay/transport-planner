@@ -54,9 +54,9 @@ export type QueryType = {
 }
 
 export type WaypointType = {
-    id: number,
+    // id: number,
     text: string,
-    routeId: number,
+    // routeId: number,
 }
 
 export type IdSetType = {
@@ -91,7 +91,8 @@ export type RoutePropsType ={
 }
 
 export type WaypointPropsType ={
-    routeId: string,
+    // routeId: string,
+    routeIndex: number,
     routes: RouteType[];
     setRoutes: React.Dispatch<React.SetStateAction<RouteType[]>>;
     waypoints: WaypointType[];

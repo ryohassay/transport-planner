@@ -1,21 +1,21 @@
 import { useState, useId } from "react";
 import { WaypointPropsType } from "../types";
-import { NUM_WAYPOINTS } from "../consts";
+import { NUM_ROUTES, NUM_WAYPOINTS } from "../consts";
 
 
-const Waypoint = ({ routeId, routes, setRoutes, waypoints, setWaypoints, idList, setIdList }: WaypointPropsType) => {
+const Waypoint = ({ routeIndex, routes, setRoutes, waypoints, setWaypoints, idList, setIdList }: WaypointPropsType) => {
     const [waypointCount, setWaypointCount] = useState<number>(0);
     
     const addWaypoint = () => {
-        const id = useId()
-        setWaypoints([
-            ...waypoints, 
-            {
-                id: id,
-                text: "",
-                routeId: routeId,
-            }
-        ]);
+        // const id = String((new Date()).valueOf());
+        // setWaypoints([
+        //     ...waypoints, 
+        //     {
+        //         // id: id,
+        //         text: "",
+        //         // routeId: routeId,
+        //     }
+        // ]);
         // setIdList([...idList, {
         //     routeId: routeId,
         //     waypointIds: [
@@ -27,10 +27,12 @@ const Waypoint = ({ routeId, routes, setRoutes, waypoints, setWaypoints, idList,
     };
 
     const setWaypoint = (index: number, value: string) => {
-        setWaypoints(waypoints.map((waypoint, i) => (i === index ? {
-            id: waypoint.id,
+        console.log(NUM_WAYPOINTS * routeIndex + index);  // Test
+        
+        setWaypoints(waypoints.map((waypoint, i) => (i === NUM_WAYPOINTS * routeIndex + index ? {
+            // id: waypoint.id,
             text: value,
-            routeId: waypoint.routeId
+            // routeId: waypoint.routeId
         } : waypoint)));
     };
     
