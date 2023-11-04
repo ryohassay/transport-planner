@@ -1,12 +1,3 @@
-// export type modesType = {
-//     al: 0 | 1,
-//     shin: 0 | 1,
-//     ex: 0 | 1,
-//     hb: 0 | 1,
-//     lb: 0 | 1,
-//     sr: 0 | 1,
-// }
-
 export type modesType = {
     al: boolean,
     shin: boolean,
@@ -23,10 +14,6 @@ export type FormType = {
 }
 
 export type TimeSpecType = "departure" | "arrival" | "first" | "last" | "none"
-
-export type ViaType = string | undefined
-
-export type ViaListType = ViaType[]
 
 export type RouteType = {
     id: string,
@@ -69,8 +56,6 @@ export type FormPropsType = {
     setRoutes: React.Dispatch<React.SetStateAction<RouteType[]>>,
     waypoints: WaypointType[],
     setWaypoints: React.Dispatch<React.SetStateAction<WaypointType[]>>,
-    idList: IdSetType[], 
-    setIdList: React.Dispatch<React.SetStateAction<IdSetType[]>>,
     modes: modesType,
     setModes: React.Dispatch<React.SetStateAction<modesType>>,
     speed: number | null,
@@ -86,17 +71,10 @@ export type RoutePropsType ={
     setRoutes: React.Dispatch<React.SetStateAction<RouteType[]>>;
     waypoints: WaypointType[];
     setWaypoints: React.Dispatch<React.SetStateAction<any[]>>,
-    idList: IdSetType[], 
-    setIdList: React.Dispatch<React.SetStateAction<IdSetType[]>>,
 }
 
 export type WaypointPropsType ={
-    // routeId: string,
     routeIndex: number,
-    routes: RouteType[];
-    setRoutes: React.Dispatch<React.SetStateAction<RouteType[]>>;
     waypoints: WaypointType[];
     setWaypoints: React.Dispatch<React.SetStateAction<any[]>>,
-    idList: IdSetType[], 
-    setIdList: React.Dispatch<React.SetStateAction<IdSetType[]>>,
 }

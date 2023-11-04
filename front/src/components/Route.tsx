@@ -8,7 +8,7 @@ type radioOptionType = {
     text: string,
 }
 
-const Route = ({ routeIndex, routes, setRoutes, waypoints, setWaypoints, idList, setIdList }: RoutePropsType) => {
+const Route = ({ routeIndex, routes, setRoutes, waypoints, setWaypoints }: RoutePropsType) => {
     const radioOptions: radioOptionType[] = [
         {value: "departure", text: "出発"}, 
         {value: "arrival", text: "到着"}, 
@@ -32,14 +32,9 @@ const Route = ({ routeIndex, routes, setRoutes, waypoints, setWaypoints, idList,
     };
 
     const waypointProps = {
-        // routeId: routes[routeIndex].id,
         routeIndex: routeIndex,
-        routes: routes,
-        setRoutes: setRoutes,
         waypoints: waypoints,
         setWaypoints: setWaypoints,
-        idList: idList,
-        setIdList:setIdList
     };
 
     return (

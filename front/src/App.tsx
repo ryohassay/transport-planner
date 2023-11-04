@@ -66,8 +66,6 @@ function App() {
         setRoutes: setRoutes,
         waypoints: waypoints,
         setWaypoints: setWaypoints,
-        idList: idList,
-        setIdList: setIdList,
         modes: modes,
         setModes: setModes,
         speed: speed,

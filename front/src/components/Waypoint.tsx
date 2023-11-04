@@ -1,31 +1,11 @@
-import { useState, useId } from "react";
+import { useState } from "react";
 import { WaypointPropsType } from "../types";
-import { NUM_ROUTES, NUM_WAYPOINTS } from "../consts";
+import { NUM_WAYPOINTS } from "../consts";
 
 
-const Waypoint = ({ routeIndex, routes, setRoutes, waypoints, setWaypoints, idList, setIdList }: WaypointPropsType) => {
+const Waypoint = ({ routeIndex, waypoints, setWaypoints }: WaypointPropsType) => {
     const [waypointCount, setWaypointCount] = useState<number>(0);
     
-    const addWaypoint = () => {
-        // const id = String((new Date()).valueOf());
-        // setWaypoints([
-        //     ...waypoints, 
-        //     {
-        //         // id: id,
-        //         text: "",
-        //         // routeId: routeId,
-        //     }
-        // ]);
-        // setIdList([...idList, {
-        //     routeId: routeId,
-        //     waypointIds: [
-        //         ..., 
-        //         id
-        //     ],
-        // }]);  // Fix this
-        setWaypointCount(prevCount => prevCount + 1);
-    };
-
     const setWaypoint = (index: number, value: string) => {
         console.log(NUM_WAYPOINTS * routeIndex + index);  // Test
         
@@ -37,7 +17,7 @@ const Waypoint = ({ routeIndex, routes, setRoutes, waypoints, setWaypoints, idLi
     };
     
     return (
-        <div>
+        <div className="waypoint-container">
             <ul className="waypoint">
                 {Array.from({length: waypointCount}, (_, index) => {
                     return (
@@ -51,7 +31,7 @@ const Waypoint = ({ routeIndex, routes, setRoutes, waypoints, setWaypoints, idLi
                 })}
             </ul>
             
-            <button type="button" onClick={addWaypoint} disabled={waypointCount >= NUM_WAYPOINTS}>経由地を追加</button>
+            <button type="button" onClick={() => setWaypointCount(prevCount => prevCount + 1)} disabled={waypointCount >= NUM_WAYPOINTS}>経由地を追加</button>
         </div>
     );
 };

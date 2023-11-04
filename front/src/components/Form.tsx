@@ -4,7 +4,7 @@ import Option from "./Option";
 import { RouteType, modesType, FormPropsType } from "../types";
 import { NUM_ROUTES } from "../consts";
 
-const Form = ({ routes, setRoutes, waypoints, setWaypoints, idList, setIdList, modes, setModes, speed, setSpeed, order, setOrder, handleSubmit }: FormPropsType) => {
+const Form = ({ routes, setRoutes, waypoints, setWaypoints, modes, setModes, speed, setSpeed, order, setOrder, handleSubmit }: FormPropsType) => {
     const addRoutes = () => {
         const id = String((new Date()).valueOf());
         const newRoute: RouteType = {
@@ -23,8 +23,6 @@ const Form = ({ routes, setRoutes, waypoints, setWaypoints, idList, setIdList, m
         setRoutes: setRoutes,
         waypoints: waypoints,
         setWaypoints: setWaypoints,
-        idList: idList,
-        setIdList: setIdList
     };
 
     const options = {
@@ -43,7 +41,7 @@ const Form = ({ routes, setRoutes, waypoints, setWaypoints, idList, setIdList, m
                     Array.from({length: routes.length}, (_, index) => {
                         return (
                             <li key={index}>
-                                <Route {...routeProps} routeIndex={index} />
+                                <Route routeIndex={index} {...routeProps} />
                             </li>
                         );
                     })
