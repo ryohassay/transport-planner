@@ -91,7 +91,8 @@ def index():
 
 @app.route("/", methods=['post'])
 def result():
-    print(request.get_json())
+    query = request.get_json()
+    print(query, type(query))
     
     routes_js = []
     # for i in range(5):

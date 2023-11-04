@@ -16,7 +16,6 @@ export type FormType = {
 export type TimeSpecType = "departure" | "arrival" | "first" | "last" | "none"
 
 export type RouteType = {
-    id: string,
     origin: string,
     destination: string,
     datetime: Date,

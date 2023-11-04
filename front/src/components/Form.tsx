@@ -6,9 +6,7 @@ import { NUM_ROUTES } from "../consts";
 
 const Form = ({ routes, setRoutes, waypoints, setWaypoints, modes, setModes, speed, setSpeed, order, setOrder, handleSubmit }: FormPropsType) => {
     const addRoutes = () => {
-        const id = String((new Date()).valueOf());
         const newRoute: RouteType = {
-            id: id,
             origin: "",
             destination: "",
             datetime: new Date(),

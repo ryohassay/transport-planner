@@ -1,4 +1,4 @@
-import { useState, useId } from "react"
+import { useState } from "react"
 import axios from "axios";
 import "react-datetime/css/react-datetime.css";
 import './App.css';
@@ -8,7 +8,6 @@ import { NUM_ROUTES, NUM_WAYPOINTS } from "./consts";
 
 function App() {
     const route: RouteType = {
-        id: useId(),
         origin: "",
         destination: "",
         datetime: new Date(),
@@ -19,11 +18,6 @@ function App() {
 
     // const [routes, setRoutes] = useState<RouteType[]>(new Array<RouteType>(NUM_ROUTES).fill(route));
     const [routes, setRoutes] = useState<RouteType[]>([route]);
-
-    const [idList, setIdList] = useState<IdSetType[]>([{
-        routeId: useId(),
-        waypointIds: [],
-    }]);
 
     const [modes, setModes] = useState<modesType>({
         al: true,
@@ -48,7 +42,6 @@ function App() {
     const query = {
         routes: routes,
         waypoints: waypoints,
-        idList: idList,
         modes: modes,
         speed: speed,
         order: order,
