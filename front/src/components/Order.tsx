@@ -1,5 +1,3 @@
-import { QueryType } from "../types";
-
 type OrderPropsType = {
     order: number | null,
     setOrder: React.Dispatch<React.SetStateAction<number | null>>,
@@ -18,7 +16,7 @@ const Order = ({ order, setOrder }: OrderPropsType) => {
     ];
     
     return (
-        <div>
+        <div className="display-order-container">
             {radioOptions.map((option) => (
                 <label key={option.value}>
                     <input

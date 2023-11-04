@@ -8,7 +8,7 @@ class Station:
         self.arr_tm = init_arr_tm
 
 
-    def set_info(self, sta_html: bs4.element.Tag, has_time: bool):
+    def set_info(self, sta_html: bs4.element.Tag, has_time: bool) -> None:
         """
         `sta_html`: `<div class="station"> </div>`
         """

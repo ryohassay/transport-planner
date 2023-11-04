@@ -41,7 +41,7 @@ class RouteSearch:
         return soup
 
 
-    def search(self):
+    def search(self) -> None:
         url = URL_BASE.format(start=self.start, dest=self.dest)
         if self.tm is not None:
             m1, m2 = int(self.tm.minute / 10), int(self.tm.minute % 10)
@@ -76,7 +76,7 @@ class Route:
         self.transports: List[Transport] = []
 
 
-    def get_summary(self):
+    def get_summary(self) -> bool:
         if self.search.error:
             return False
         else:
@@ -122,10 +122,10 @@ class Route:
             return True
 
 
-    def show_detail(self):
-        if self.dep_tm and self.arr_tm and self.fare and self.stations and self.transports:
-            for station, transport in zip(self.stations, self.transports):
-                print('　　{}着\n{}\n　　{}発'.format(station.arr_tm, station.name, station.dep_tm))
-                print('　｜\n　｜　　{}\n　｜'.format(transport.name))
-            dest_sta = self.stations[len(self.stations) - 1]
-            print('　　{}着\n{}\n'.format(dest_sta.arr_tm, dest_sta.name))
+    # def show_detail(self):
+    #     if self.dep_tm and self.arr_tm and self.fare and self.stations and self.transports:
+    #         for station, transport in zip(self.stations, self.transports):
+    #             print('　　{}着\n{}\n　　{}発'.format(station.arr_tm, station.name, station.dep_tm))
+    #             print('　｜\n　｜　　{}\n　｜'.format(transport.name))
+    #         dest_sta = self.stations[len(self.stations) - 1]
+    #         print('　　{}着\n{}\n'.format(dest_sta.arr_tm, dest_sta.name))

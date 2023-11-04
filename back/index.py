@@ -7,6 +7,8 @@ from flask_cors import CORS
 from route import RouteSearch, Route
 from arg_parser import Parser
 
+NUM_WAYPOINTS = 3  # Number of waypoints per route
+
 
 app = Flask(__name__, template_folder='../front/build', static_folder='../front/build/static')
 # app.add_url_rule('/', 'root', lambda: app.send_static_file('index.html'))
@@ -20,16 +22,16 @@ def after_request(response):
     return response
 
 
-def _convert_tm_type(tm_type_str):
-    if tm_type_str == 'dep':
+def _convert_tm_type(tm_type_str: str) -> int:
+    if tm_type_str == 'departure':
         tm_type = 1
-    elif tm_type_str == 'arr':
+    elif tm_type_str == 'arrival':
         tm_type = 4
-    elif tm_type_str == 'las':
-        tm_type = 2
-    elif tm_type_str == 'fir':
+    elif tm_type_str == 'first':
         tm_type = 3
-    elif tm_type_str == 'non' or tm_type_str == '':
+    elif tm_type_str == 'last':
+        tm_type = 2
+    elif tm_type_str == 'none' or tm_type_str == '':
         tm_type = 5
     else:
         raise ValueError('The value of `tm_type` is not valid.')
@@ -92,7 +94,14 @@ def index():
 @app.route("/", methods=['post'])
 def result():
     query = request.get_json()
-    print(query, type(query))
+    print(query, type(query))  # Test
+
+    routes, waypoints, modes, speed, order = query
+
+    for i, route in enumerate(routes):
+        route_waypoints = waypoints[NUM_WAYPOINTS * i : NUM_WAYPOINTS * (i + 1)]
+        route_result = _search_transit(route, route_waypoints, modes, speed, order)  # Fix this function
+        print(route_result)
     
     routes_js = []
     # for i in range(5):
