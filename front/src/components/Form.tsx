@@ -1,44 +1,27 @@
-import { useState } from "react";
+import { useState, useId } from "react";
 import Route from "./Route";
 import Option from "./Option";
-import { RouteType, modesType } from "../types";
+import { RouteType, modesType, FormPropsType } from "../types";
 import { NUM_ROUTES } from "../consts";
 
-
-type FormPropsType = {
-    routes: RouteType[],
-    setRoutes: React.Dispatch<React.SetStateAction<RouteType[]>>,
-    waypoints: any[],
-    setWaypoints: React.Dispatch<React.SetStateAction<any[]>>,
-    modes: modesType,
-    setModes: React.Dispatch<React.SetStateAction<modesType>>,
-    speed: number | null,
-    setSpeed: React.Dispatch<React.SetStateAction<number | null>>,
-    order: number | null,
-    setOrder: React.Dispatch<React.SetStateAction<number | null>>,
-    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-}
-
-const Form = ({routes, setRoutes, waypoints, setWaypoints, modes, setModes, speed, setSpeed, order, setOrder, handleSubmit}: FormPropsType) => {
+const Form = ({ routes, setRoutes, waypoints, setWaypoints, modes, setModes, speed, setSpeed, order, setOrder, handleSubmit }: FormPropsType) => {
     const addRoutes = () => {
         const newRoute: RouteType = {
-            index: null,
             origin: "",
             destination: "",
             datetime: new Date(),
             timeSpec: "departure",
-            waypointIds: [],
-        }
+        };
 
         setRoutes([...routes, newRoute]);
     };
     
-    const routeQuery = {
+    const routeProps = {
         routes: routes,
         setRoutes: setRoutes,
         waypoints: waypoints,
-        setWaypoints: setWaypoints
-    }
+        setWaypoints: setWaypoints,
+    };
 
     const options = {
         modes: modes,
@@ -47,7 +30,7 @@ const Form = ({routes, setRoutes, waypoints, setWaypoints, modes, setModes, spee
         setSpeed: setSpeed,
         order: order,
         setOrder: setOrder
-    }
+    };
 
     return (
         <form id="search" onSubmit={handleSubmit}>
@@ -56,7 +39,7 @@ const Form = ({routes, setRoutes, waypoints, setWaypoints, modes, setModes, spee
                     Array.from({length: routes.length}, (_, index) => {
                         return (
                             <li key={index}>
-                                <Route {...routeQuery} index={index} />
+                                <Route routeIndex={index} {...routeProps} />
                             </li>
                         );
                     })

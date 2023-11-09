@@ -12,7 +12,7 @@ type optionPropsType = {
     setOrder: React.Dispatch<React.SetStateAction<number | null>>,
 }
 
-const Option = ({modes, setModes, speed, setSpeed, order, setOrder}: optionPropsType) => {    
+const Option = ({ modes, setModes, speed, setSpeed, order, setOrder }: optionPropsType) => {    
     return (
         <div>
             <Mode modes={modes} setModes={setModes} />

@@ -1,48 +1,37 @@
 import { useState } from "react";
-import { RoutePropsType, ViaListType } from "../types";
+import { WaypointPropsType } from "../types";
 import { NUM_WAYPOINTS } from "../consts";
 
 
-const Waypoint = ({ index, routes, setRoutes, waypoints, setWaypoints }: RoutePropsType) => {
+const Waypoint = ({ routeIndex, waypoints, setWaypoints }: WaypointPropsType) => {
     const [waypointCount, setWaypointCount] = useState<number>(0);
     
-    const addWaypoint = () => {
-        setWaypoints([
-            ...waypoints, 
-            {
-                id: (new Date()).valueOf(),
-                text: "",
-                parentId: index,
-            }
-        ]);
-        
-        setWaypointCount(prevCount => prevCount + 1);
-    };
-
     const setWaypoint = (index: number, value: string) => {
-        setWaypoints(waypoints.map((waypoint, i) => (i === index ? {
-            id: waypoint.id,
+        console.log(NUM_WAYPOINTS * routeIndex + index);  // Test
+        
+        setWaypoints(waypoints.map((waypoint, i) => (i === NUM_WAYPOINTS * routeIndex + index ? {
+            // id: waypoint.id,
             text: value,
-            parentId: waypoint.parentId
+            // routeId: waypoint.routeId
         } : waypoint)));
     };
     
     return (
-        <div>
+        <div className="waypoint-container">
             <ul className="waypoint">
                 {Array.from({length: waypointCount}, (_, index) => {
                     return (
                         <li key={index}>
                             <dl>
                                 <dt>経由{index + 1}</dt>
-                                <dd><input type="text" name={"waypoint" + index} placeholder="経由地" onChange={e => setWaypoint(index, e.target.value)} /></dd>
+                                <dd><input type="text" name={"waypoint-" + index} placeholder="経由地" onChange={e => setWaypoint(index, e.target.value)} /></dd>
                             </dl>
                         </li>
                     );
                 })}
             </ul>
             
-            <button type="button" onClick={addWaypoint} disabled={waypointCount >= NUM_WAYPOINTS}>経由地を追加</button>
+            <button type="button" onClick={() => setWaypointCount(prevCount => prevCount + 1)} disabled={waypointCount >= NUM_WAYPOINTS}>経由地を追加</button>
         </div>
     );
 };

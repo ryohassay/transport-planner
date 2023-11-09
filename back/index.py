@@ -1,4 +1,3 @@
-from typing import Dict, List
 from flask import Flask, render_template, request, send_from_directory
 from datetime import datetime as dt
 from datetime import time as tm
@@ -6,6 +5,8 @@ from flask_cors import CORS
 
 from route import RouteSearch, Route
 from arg_parser import Parser
+
+NUM_WAYPOINTS = 3  # Number of waypoints per route
 
 
 app = Flask(__name__, template_folder='../front/build', static_folder='../front/build/static')
@@ -20,16 +21,16 @@ def after_request(response):
     return response
 
 
-def _convert_tm_type(tm_type_str):
-    if tm_type_str == 'dep':
+def _convert_tm_type(tm_type_str: str) -> int:
+    if tm_type_str == 'departure':
         tm_type = 1
-    elif tm_type_str == 'arr':
+    elif tm_type_str == 'arrival':
         tm_type = 4
-    elif tm_type_str == 'las':
-        tm_type = 2
-    elif tm_type_str == 'fir':
+    elif tm_type_str == 'first':
         tm_type = 3
-    elif tm_type_str == 'non' or tm_type_str == '':
+    elif tm_type_str == 'last':
+        tm_type = 2
+    elif tm_type_str == 'none' or tm_type_str == '':
         tm_type = 5
     else:
         raise ValueError('The value of `tm_type` is not valid.')
@@ -37,7 +38,7 @@ def _convert_tm_type(tm_type_str):
     return tm_type
 
 
-def _search_transit(start: str, dest: str, tm: dt, tm_type: int):
+def _search_transit(start: str, dest: str, tm: dt, tm_type: int):  # Legacy
     route = Route(RouteSearch(start, dest, tm, tm_type))
     route.search.search()
     result = route.get_summary()
@@ -46,9 +47,15 @@ def _search_transit(start: str, dest: str, tm: dt, tm_type: int):
         return route
     else:  # if the search result is an error
         return None
+    
+
+def _search_transit(route: list[dict], route_waypoints: list[dict], modes: dict, speed: int, order: int) -> dict:
+    
+    
+    return None
 
 
-def _convert_route_for_js(route: Route) -> List[Dict]:
+def _convert_route_for_js(route: Route) -> list[dict]:
     stations_js = []
     for station in route.stations:
         station_js = {
@@ -91,7 +98,15 @@ def index():
 
 @app.route("/", methods=['post'])
 def result():
-    print(request.get_json())
+    query = request.get_json()
+    print(query, type(query))  # Test
+
+    routes, waypoints, modes, speed, order = query
+
+    for i, route in enumerate(routes):
+        route_waypoints = waypoints[NUM_WAYPOINTS * i : NUM_WAYPOINTS * (i + 1)]
+        route_result = _search_transit(route, route_waypoints, modes, speed, order)  # Fix this function
+        print(route_result)
     
     routes_js = []
     # for i in range(5):

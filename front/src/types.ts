@@ -1,12 +1,3 @@
-// export type modesType = {
-//     al: 0 | 1,
-//     shin: 0 | 1,
-//     ex: 0 | 1,
-//     hb: 0 | 1,
-//     lb: 0 | 1,
-//     sr: 0 | 1,
-// }
-
 export type modesType = {
     al: boolean,
     shin: boolean,
@@ -24,17 +15,11 @@ export type FormType = {
 
 export type TimeSpecType = "departure" | "arrival" | "first" | "last" | "none"
 
-export type ViaType = string | undefined
-
-export type ViaListType = ViaType[]
-
 export type RouteType = {
-    index: number | null,
     origin: string,
     destination: string,
     datetime: Date,
     timeSpec: TimeSpecType,
-    waypointIds: number[],
 }
 
 export type optionsType = {
@@ -55,22 +40,40 @@ export type QueryType = {
 }
 
 export type WaypointType = {
-    id: number,
+    // id: number,
     text: string,
-    parentId: number,
+    // routeId: number,
+}
+
+export type IdSetType = {
+    routeId: string,
+    waypointIds: string[],
 }
 
 export type FormPropsType = {
-    viaCount: number, 
-    setViaCount: React.Dispatch<React.SetStateAction<number>>,
-    query: QueryType,
+    routes: RouteType[],
+    setRoutes: React.Dispatch<React.SetStateAction<RouteType[]>>,
+    waypoints: WaypointType[],
+    setWaypoints: React.Dispatch<React.SetStateAction<WaypointType[]>>,
+    modes: modesType,
+    setModes: React.Dispatch<React.SetStateAction<modesType>>,
+    speed: number | null,
+    setSpeed: React.Dispatch<React.SetStateAction<number | null>>,
+    order: number | null,
+    setOrder: React.Dispatch<React.SetStateAction<number | null>>,
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
 }
 
 export type RoutePropsType ={
-    index: number,
+    routeIndex: number,
     routes: RouteType[];
     setRoutes: React.Dispatch<React.SetStateAction<RouteType[]>>;
+    waypoints: WaypointType[];
+    setWaypoints: React.Dispatch<React.SetStateAction<any[]>>,
+}
+
+export type WaypointPropsType ={
+    routeIndex: number,
     waypoints: WaypointType[];
     setWaypoints: React.Dispatch<React.SetStateAction<any[]>>,
 }

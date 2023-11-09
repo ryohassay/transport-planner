@@ -3,38 +3,18 @@ import axios from "axios";
 import "react-datetime/css/react-datetime.css";
 import './App.css';
 import Form from "./components/Form";
-import { TimeSpecType, ViaListType, RouteType, QueryType, modesType, WaypointType } from "./types";
-import { NUM_ROUTES } from "./consts";
+import { FormPropsType, RouteType, IdSetType, modesType, WaypointType } from "./types";
+import { NUM_ROUTES, NUM_WAYPOINTS } from "./consts";
 
 function App() {
-    // const [viaCount, setViaCount] = useState<number>(0);
-
-    // const [index, setIndex] = useState<number | null>(null);
-    // const [origin, setOrigin] = useState<string>("");
-    // const [destination, setDestination] = useState<string>("");
-    // const [datetime, setDatetime] = useState<Date>(new Date());
-    // const [timeSpec, setTimeSpec] = useState<TimeSpecType>("departure");
-    // const [vias, setVias] = useState<ViaListType>(["", "", ""]);
-
-    // const [route, setRoute] = useState({
-    //     index: null,
-    //     origin: "",
-    //     destination: "",
-    //     datetime: new Date(),
-    //     timeSpec: "departure",
-    //     trPoints: ["", "", ""],  // Max three transit points
-    // });
-
     const route: RouteType = {
-        index: null,
         origin: "",
         destination: "",
         datetime: new Date(),
         timeSpec: "departure",
-        waypointIds: [],
     };
 
-    const [waypoints, setWaypoints] = useState<WaypointType[]>([]);
+    const [waypoints, setWaypoints] = useState<WaypointType[]>(new Array<WaypointType>(NUM_ROUTES * NUM_WAYPOINTS).fill({text: ""}));  // indeces 0-2: the first route, 3-5: the second route, ...
 
     // const [routes, setRoutes] = useState<RouteType[]>(new Array<RouteType>(NUM_ROUTES).fill(route));
     const [routes, setRoutes] = useState<RouteType[]>([route]);
@@ -59,16 +39,22 @@ function App() {
         setOrder: setOrder,
     };
 
+    const query = {
+        routes: routes,
+        waypoints: waypoints,
+        modes: modes,
+        speed: speed,
+        order: order,
+    };
+
     const handleSubmit= (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
-        console.log(query);  // Test
 
         const response = axios.post("http://127.0.0.1:5000/", query)
         .catch(err => console.log(err));
     };
 
-    const query = {
+    const formProps: FormPropsType = {
         routes: routes,
         setRoutes: setRoutes,
         waypoints: waypoints,
@@ -79,13 +65,14 @@ function App() {
         setSpeed: setSpeed,
         order: order,
         setOrder: setOrder,
-    }
+        handleSubmit: handleSubmit,
+    };
 
-    console.log(query)
+    console.log(routes, waypoints, options);
 
     return (
         <div className="App">
-            <Form {...query} handleSubmit={handleSubmit}/>
+            <Form {...formProps} />
         </div>
     );
 }
