@@ -23,7 +23,7 @@ PAGE = '&no={page}'
 
 
 class RouteSearch:
-    def __init__(self, init_start: str, init_dest: str, init_tm: dt = None, init_tm_type: int = 5, init_options: List = None, init_page: int = 1) -> None:
+    def __init__(self, init_start: str, init_dest: str, init_tm: dt = None, init_tm_type: int = 5, init_options: List = None, init_page: int = 1) -> None:  # Legacy
         self.start = init_start
         self.dest = init_dest
         self.tm = init_tm
@@ -34,6 +34,9 @@ class RouteSearch:
         self.soup = None
         self.error = False
 
+
+    def __init__():
+        return None
 
     def _get_html(self, url: str) -> BeautifulSoup:
         html = requests.get(url).content

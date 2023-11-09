@@ -1,4 +1,3 @@
-from typing import Dict, List
 from flask import Flask, render_template, request, send_from_directory
 from datetime import datetime as dt
 from datetime import time as tm
@@ -39,7 +38,7 @@ def _convert_tm_type(tm_type_str: str) -> int:
     return tm_type
 
 
-def _search_transit(start: str, dest: str, tm: dt, tm_type: int):
+def _search_transit(start: str, dest: str, tm: dt, tm_type: int):  # Legacy
     route = Route(RouteSearch(start, dest, tm, tm_type))
     route.search.search()
     result = route.get_summary()
@@ -48,9 +47,15 @@ def _search_transit(start: str, dest: str, tm: dt, tm_type: int):
         return route
     else:  # if the search result is an error
         return None
+    
+
+def _search_transit(route: list[dict], route_waypoints: list[dict], modes: dict, speed: int, order: int) -> dict:
+    
+    
+    return None
 
 
-def _convert_route_for_js(route: Route) -> List[Dict]:
+def _convert_route_for_js(route: Route) -> list[dict]:
     stations_js = []
     for station in route.stations:
         station_js = {

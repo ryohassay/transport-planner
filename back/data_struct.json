@@ -1,0 +1,10 @@
+{
+    "routes": [
+        {"origin": "１ー１", "destination": "１－２", "datetime": "2023-11-04T12:38:00.323Z", "timeSpec": "departure"}, 
+        {"origin": "２－１", "destination": "２－２", "datetime": "2023-11-04T12:38:03.006Z", "timeSpec": "departure"}
+    ], 
+    "waypoints": [{"text": "１"}, {"text": ""}, {"text": ""}, {"text": "４"}, {"text": ""}, {"text": ""}, {"text": ""}, {"text": ""}, {"text": ""}, {"text": ""}, {"text": ""}, {"text": ""}, {"text": ""}, {"text": ""}, {"text": ""}], 
+    "modes": {"al": "True", "shin": "False", "ex": "True", "hb": "True", "lb": "True", "sr": "True"}, 
+    "speed": 4, 
+    "order": 2
+}
