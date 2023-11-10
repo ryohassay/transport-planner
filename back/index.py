@@ -38,19 +38,20 @@ def _convert_tm_type(tm_type_str: str) -> int:
     return tm_type
 
 
-def _search_transit(start: str, dest: str, tm: dt, tm_type: int):  # Legacy
-    route = Route(RouteSearch(start, dest, tm, tm_type))
-    route.search.search()
-    result = route.get_summary()
-    route.get_detail()
-    if result:
-        return route
-    else:  # if the search result is an error
-        return None
+# def _search_transit(start: str, dest: str, tm: dt, tm_type: int):  # Legacy
+#     route = Route(RouteSearch(start, dest, tm, tm_type))
+#     route.search.search()
+#     result = route.get_summary()
+#     route.get_detail()
+#     if result:
+#         return route
+#     else:  # if the search result is an error
+#         return None
     
 
 def _search_transit(route: list[dict], route_waypoints: list[dict], modes: dict, speed: int, order: int) -> dict:
-    
+    search = RouteSearch(route, route_waypoints, modes, speed, order)
+    search.search()
     
     return None
 
@@ -101,12 +102,12 @@ def result():
     query = request.get_json()
     print(query, type(query))  # Test
 
-    routes, waypoints, modes, speed, order = query
+    routes, waypoints, modes, speed, order = [query.get(key) for key in query.keys()]
 
     for i, route in enumerate(routes):
         route_waypoints = waypoints[NUM_WAYPOINTS * i : NUM_WAYPOINTS * (i + 1)]
         route_result = _search_transit(route, route_waypoints, modes, speed, order)  # Fix this function
-        print(route_result)
+        # print(route_result)
     
     routes_js = []
     # for i in range(5):
