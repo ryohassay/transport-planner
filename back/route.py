@@ -1,7 +1,7 @@
 import requests, re
 from bs4 import BeautifulSoup, element
 from datetime import datetime as dt
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from station import Station
 from transport import Transport
@@ -49,8 +49,8 @@ class RouteSearch:
         self.speed = init_speed
         self.order = init_order
         self.url: str | None = None
-        self.soups: list[BeautifulSoup] = []
-        self.errors: list[bool] = False
+        self.soups: list[BeautifulSoup | None] = [None] * NUM_PAGES
+        self.errors: list[bool] = [False] * NUM_PAGES
 
 
     def _get_html(self, url: str) -> BeautifulSoup:
@@ -78,7 +78,7 @@ class RouteSearch:
             if title == '乗換案内、時刻表、運行情報 - Yahoo!路線情報':
                 self.errors[page] = True
             
-            self.soups.append(soup)
+            self.soups[page] = soup
 
 
 @dataclass
@@ -86,8 +86,8 @@ class RouteSummary:
     dep_tm = None
     arr_tm = None
     fare: int | None = None
-    stations: list[Station] = []
-    transports: list[Transport] = []
+    stations: list[Station] = field(default_factory=list)
+    transports: list[Transport] = field(default_factory=list)
 
 
 class RouteInfo:
@@ -138,54 +138,62 @@ class RouteInfo:
 
 
     def get_detail(self) -> bool:
-        for page in range(NUM_PAGES):
-            if self.search.errors[page]:
+        for i in range(NUM_PAGES):
+            if self.search.errors[i]:
                 return False
             else:
                 has_time = False if self.search.time_spec == 5 else True
 
-                sta_htmls = self._get_sta_htmls()
+                sta_htmls = self._get_sta_htmls(i)
                 for sta_html in sta_htmls:
                     station = Station()
                     station.set_info(sta_html, has_time)
-                    self.summaries[page].stations.append(station)
+                    self.summaries[i].stations.append(station)
 
-                trpt_htmls = self._get_trpt_htmls()
+                trpt_htmls = self._get_trpt_htmls(i)
                 for trpt_html in trpt_htmls:
                     transport = Transport()
                     transport.set_info(trpt_html)
-                    self.summaries[page].transports.append(transport)
+                    self.summaries[i].transports.append(transport)
 
                 return True
         
 
-    def getJson(self) -> list:
-        stations_js = []
-        for station in self.stations:
-            station_js = {
-                "name": station.name,
-                "dep_tm": station.dep_tm,
-                "arr_tm": station.arr_tm
-            }
-            stations_js.append(station_js)
+    def getJson(self) -> dict:
+        pages = []
+        for i in range(NUM_PAGES):
+            stations_js = []
+            for station in self.summaries[i].stations:
+                station_js = {
+                    'name': station.name,
+                    'dep_tm': station.dep_tm,
+                    'arr_tm': station.arr_tm
+                }
+                stations_js.append(station_js)
 
-        transports_js = []
-        for transport in self.transports:
-            transport_js = {
-                "name": transport.name,
-                "color": transport.color
+            transports_js = []
+            for transport in self.summaries[i].transports:
+                transport_js = {
+                    'name': transport.name,
+                    'color': transport.color
+                }
+                transports_js.append(transport_js)
+            
+            page = {
+                'dep_tm': self.summaries[i].dep_tm,
+                'arr_tm': self.summaries[i].arr_tm,
+                'fare': self.summaries[i].fare,
+                'stations': stations_js,
+                'transports': transports_js,
             }
-            transports_js.append(transport_js)
+
+            pages.append(page)
 
         route_js = {
-            "origin": self.origin,
-            "dest": self.destination,
-            "dep_tm": self.dep_tm,
-            "arr_tm": self.arr_tm,
-            "fare": self.fare,
-            "stations": stations_js,
-            "transports": transports_js,
-            "url": self.search.url
+            'origin': self.origin,
+            'dest': self.destination,
+            'pages': pages,
+            'url': self.search.url
         }
 
         return route_js
