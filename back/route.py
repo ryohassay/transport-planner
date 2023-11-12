@@ -1,6 +1,7 @@
 import requests, re
 from bs4 import BeautifulSoup, element
 from datetime import datetime as dt
+from datetime import timezone, timedelta
 from dataclasses import dataclass, field
 
 from station import Station
@@ -42,7 +43,7 @@ class RouteSearch:
         
         self.origin: str = init_route['origin']
         self.destination: str = init_route['destination']
-        self.datetime: dt = dt.fromisoformat(init_route['datetime'])
+        self.datetime: dt = dt.fromisoformat(init_route['datetime']).astimezone(timezone(timedelta(hours=+9)))  # Attach timezone (JST)
         self.time_spec: int = time_spec_dict[init_route['timeSpec']]
         self.route_waypoints = init_route_waypoints
         self.modes = init_modes
@@ -112,16 +113,16 @@ class RouteInfo:
 
 
     def get_summary(self) -> bool:
-        for page in range(NUM_PAGES):
-            if self.search.errors[page]:
+        for i in range(NUM_PAGES):
+            if self.search.errors[i]:
                 return False
             else:
-                route_summary = self.search.soups[page].find('div', class_='routeSummary')
+                route_summary = self.search.soups[i].find('div', class_='routeSummary')
                 fare_str = route_summary.find('li', class_='fare').get_text().replace(',', '')  # 数字中のコンマ削除
-                self.summaries[page].fare = int(re.search(r'\d+', fare_str).group())
+                self.summaries[i].fare = int(re.search(r'\d+', fare_str).group())
                 if self.search.time_spec != 5:
                     time_str = route_summary.find('li', class_='time').get_text()
-                    self.summaries[page].dep_tm, self.summaries[page].arr_tm = re.findall(r'((?:[01][0-9]|2[0-3]):[0-5][0-9])', time_str)
+                    self.summaries[i].dep_tm, self.summaries[i].arr_tm = re.findall(r'((?:[01][0-9]|2[0-3]):[0-5][0-9])', time_str)
                 return True
 
 
