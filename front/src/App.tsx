@@ -3,10 +3,19 @@ import axios from "axios";
 import "react-datetime/css/react-datetime.css";
 import './App.css';
 import Form from "./components/Form";
-import { FormPropsType, RouteType, IdSetType, modesType, WaypointType } from "./types";
+import Loading from "./components/Loading";
+import Result from "./components/Result";
+import { ErrorType, FormPropsType, RouteType, IdSetType, modesType, WaypointType } from "./types";
 import { NUM_ROUTES, NUM_WAYPOINTS } from "./consts";
 
 function App() {
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<ErrorType>({
+        status: false,
+        message: "",
+    });
+    const [result, setResult] = useState({});
+
     const route: RouteType = {
         origin: "",
         destination: "",
@@ -15,8 +24,6 @@ function App() {
     };
 
     const [waypoints, setWaypoints] = useState<WaypointType[]>(new Array<WaypointType>(NUM_ROUTES * NUM_WAYPOINTS).fill({text: ""}));  // indeces 0-2: the first route, 3-5: the second route, ...
-
-    // const [routes, setRoutes] = useState<RouteType[]>(new Array<RouteType>(NUM_ROUTES).fill(route));
     const [routes, setRoutes] = useState<RouteType[]>([route]);
 
     const [modes, setModes] = useState<modesType>({
@@ -28,8 +35,8 @@ function App() {
         sr: true,
     });
 
-    const [speed, setSpeed] = useState<number | null>(null);
-    const [order, setOrder] = useState<number | null>(null);
+    const [speed, setSpeed] = useState<number | null>(2);  // 歩く速さ：少し速い
+    const [order, setOrder] = useState<number | null>(0);  // 順番：到着順
     const options = {
         modes: modes,
         setModes: setModes,
@@ -49,9 +56,29 @@ function App() {
 
     const handleSubmit= (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        const response = axios.post("http://127.0.0.1:5000/", query)
-        .catch(err => console.log(err));
+        setLoading(true);
+        const response = axios.post("http://127.0.0.1:5000", query)
+            .then((res) => {
+                if(res.data.error){
+                    setError({
+                        status: true,
+                        message: res.data.error_message
+                    });
+                    console.log(res.data.error_message);
+                }
+                else{
+                    setError({
+                        status: false,
+                        message: ""
+                    });
+                    setResult(res.data.result); 
+                    console.log(res.data.result);
+                }
+            })
+            .then(() => setLoading(false))
+            .catch(err => console.log(err));
+        
+        console.log(response);  // Test
     };
 
     const formProps: FormPropsType = {
@@ -68,11 +95,12 @@ function App() {
         handleSubmit: handleSubmit,
     };
 
-    console.log(routes, waypoints, options);
+    // console.log(routes, waypoints, options);
 
     return (
         <div className="App">
             <Form {...formProps} />
+            {loading ? <Loading /> : <Result error={error} result={result} />}
         </div>
     );
 }

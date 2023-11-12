@@ -1,4 +1,4 @@
-from flask import Flask, Response, render_template, request, send_from_directory
+from flask import Flask, Response, render_template, request, send_from_directory, jsonify, make_response
 from datetime import datetime as dt
 from datetime import time as tm
 from flask_cors import CORS
@@ -12,12 +12,12 @@ NUM_PAGES = 3  # Number of search results (pages) per route
 
 app = Flask(__name__, template_folder='../front/build', static_folder='../front/build/static')
 # app.add_url_rule('/', 'root', lambda: app.send_static_file('index.html'))
-CORS(app)
+CORS(app, origins="http://localhost:3000")
 
 @app.after_request
 def after_request(response: Response):
-    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:5000')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+    # response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+    # response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
     response.headers.add('Access-Control-Allow-Methods', 'GET,POST')
     return response
 
@@ -67,17 +67,20 @@ def result():
 
         if route_js is None:
             error_msg = '出発地または到着地が正しくありません。'
-            return render_template('index.html', error_msg=error_msg)
+            # return render_template('index.html', error_msg=error_msg)
+            return make_response(jsonify({
+                'error': True,
+                'error_message': error_msg
+            }))
+
         
         routes_js.append(route_js)
 
-    return render_template('index.html', routes=routes_js)
-    # return render_template('index.html')
-
-
-# @app.route('/favicon.ico')
-# def favicon():
-#     return app.send_static_file('static/favicon.ico')
+    # return render_template('index.html', routes=routes_js)
+    return make_response(jsonify({
+        'error': False,
+        'result': routes_js
+    }))
 
 
 if __name__ == '__main__':

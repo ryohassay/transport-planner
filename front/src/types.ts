@@ -1,3 +1,8 @@
+export type ErrorType = {
+    status: boolean,
+    message: string,
+}
+
 export type modesType = {
     al: boolean,
     shin: boolean,

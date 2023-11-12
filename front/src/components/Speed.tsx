@@ -25,6 +25,7 @@ const Speed = ({ speed, setSpeed }: SpeedPropType) => {
                     <input
                         type="radio"
                         value={option.value}
+                        checked={speed === option.value}
                         name="walk-speed"
                         onChange={() => setSpeed(option.value)}
                     />

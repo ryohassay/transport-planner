@@ -22,6 +22,7 @@ const Order = ({ order, setOrder }: OrderPropsType) => {
                     <input
                         type="radio"
                         value={option.value}
+                        checked={order === option.value}
                         name="display-order"
                         onChange={() => setOrder(option.value)}
                     />
