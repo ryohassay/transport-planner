@@ -3,7 +3,7 @@ from datetime import datetime as dt
 from datetime import time as tm
 from flask_cors import CORS
 
-from route import RouteSearch, Route
+from route import RouteSearch, RouteInfo
 from arg_parser import Parser
 
 NUM_WAYPOINTS = 3  # Number of waypoints per route
@@ -49,16 +49,30 @@ def _convert_tm_type(tm_type_str: str) -> int:
 #         return None
     
 
-def _search_transit(route: list[dict], route_waypoints: list[dict], modes: dict, speed: int, order: int) -> dict:
-    search = RouteSearch(route, route_waypoints, modes, speed, order)
-    search.search()
+def _search_transit(route: list[dict], route_waypoints: list[dict], modes: dict, speed: int, order: int) -> list[dict] | None:
+    route_info = []
+
+    for page in range(NUM_PAGES):  # page: from 0 to NUM_PAGES - 1
+        search = RouteSearch(route, route_waypoints, modes, speed, order, page + 1)
+        search.search()
+
+        route_info_page = RouteInfo(search)
+        summary_res = route_info_page.get_summary()
+        if not summary_res:
+           return None
+        else:
+            detail_res = route_info_page.get_detail()
+            if not detail_res:
+                return None
+            else:
+                route_info.append(route_info_page)
     
-    return None
+    return route_info  # This being `None` means it got an error in parsing HTML
 
 
-def _convert_route_for_js(route: Route) -> list[dict]:
+def _convert_route_for_js(route_info: RouteInfo) -> list[dict]:
     stations_js = []
-    for station in route.stations:
+    for station in route_info.stations:
         station_js = {
             "name": station.name,
             "dep_tm": station.dep_tm,
@@ -67,7 +81,7 @@ def _convert_route_for_js(route: Route) -> list[dict]:
         stations_js.append(station_js)
 
     transports_js = []
-    for transport in route.transports:
+    for transport in route_info.transports:
         transport_js = {
             "name": transport.name,
             "color": transport.color
@@ -75,14 +89,14 @@ def _convert_route_for_js(route: Route) -> list[dict]:
         transports_js.append(transport_js)
 
     route_js = {
-        "start": route.start,
-        "dest": route.dest,
-        "dep_tm": route.dep_tm,
-        "arr_tm": route.arr_tm,
-        "fare": route.fare,
+        "start": route_info.start,
+        "dest": route_info.dest,
+        "dep_tm": route_info.dep_tm,
+        "arr_tm": route_info.arr_tm,
+        "fare": route_info.fare,
         "stations": stations_js,
         "transports": transports_js,
-        "url": route.search.url
+        "url": route_info.search.url
     }
 
     return route_js
@@ -100,14 +114,14 @@ def index():
 @app.route("/", methods=['post'])
 def result():
     query = request.get_json()
-    print(query, type(query))  # Test
+    print(query)  # Test
 
     routes, waypoints, modes, speed, order = [query.get(key) for key in query.keys()]
 
     for i, route in enumerate(routes):
         route_waypoints = waypoints[NUM_WAYPOINTS * i : NUM_WAYPOINTS * (i + 1)]
         route_result = _search_transit(route, route_waypoints, modes, speed, order)  # Fix this function
-        # print(route_result)
+        print(route_result)  # Test
     
     routes_js = []
     # for i in range(5):
