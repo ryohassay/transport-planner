@@ -70,17 +70,17 @@ class RouteSearch:
         url += OPTIONS.format(speed=self.speed, order=self.order, airplane=airplane, shinkansen=shinkansen, express=express, exp_bus=exp_bus, bus=bus, ferry=ferry)
         self.url = url
 
-        for page in range(NUM_PAGES):
-            page_url = self.url + PAGE.format(page=(page + 1))
+        for i in range(NUM_PAGES):
+            page_url = self.url + PAGE.format(page=(i + 1))
             soup = self._get_html(page_url)
 
             # Find error from the HTML code
             title = soup.head.find('title').get_text()
             if title == '乗換案内、時刻表、運行情報 - Yahoo!路線情報':
-                self.errors[page] = True
+                self.errors[i] = True
             
-            self.soups[page] = soup
-
+            self.soups[i] = soup
+        
 
 @dataclass
 class RouteSummary:
@@ -123,7 +123,8 @@ class RouteInfo:
                 if self.search.time_spec != 5:
                     time_str = route_summary.find('li', class_='time').get_text()
                     self.summaries[i].dep_tm, self.summaries[i].arr_tm = re.findall(r'((?:[01][0-9]|2[0-3]):[0-5][0-9])', time_str)
-                return True
+        
+        return True
 
 
     def _get_sta_htmls(self, page: int) -> list[element.Tag]:
@@ -157,7 +158,7 @@ class RouteInfo:
                     transport.set_info(trpt_html)
                     self.summaries[i].transports.append(transport)
 
-                return True
+        return True
         
 
     def getJson(self) -> dict:
