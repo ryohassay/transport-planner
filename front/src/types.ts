@@ -3,6 +3,36 @@ export type ErrorType = {
     message: string,
 }
 
+type StationType = {
+    arr_tm: string | null,
+    dep_tm: string | null,
+    name: string
+}
+
+type TransportType = {
+    color: string,
+    name: string
+}
+
+export type ResultPageType = {
+    arr_tm: string,
+    dep_tm: string,
+    fare: number,
+    stations: StationType[],
+    transports: TransportType[],
+}
+
+export type ResultType = {
+    origin: string,
+    dest: string,
+    pages: ResultPageType[],
+}
+
+export type RowPropsType = {
+    station: StationType,
+    transport?: TransportType,
+}
+
 export type modesType = {
     al: boolean,
     shin: boolean,

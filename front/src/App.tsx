@@ -5,7 +5,7 @@ import './App.css';
 import Form from "./components/Form";
 import Loading from "./components/Loading";
 import Result from "./components/Result";
-import { ErrorType, FormPropsType, RouteType, IdSetType, modesType, WaypointType } from "./types";
+import { ErrorType, ResultType, FormPropsType, RouteType, IdSetType, modesType, WaypointType } from "./types";
 import { NUM_ROUTES, NUM_WAYPOINTS } from "./consts";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
         status: false,
         message: "",
     });
-    const [result, setResult] = useState({});
+    const [result, setResult] = useState<ResultType[]>([]);
 
     const route: RouteType = {
         origin: "",

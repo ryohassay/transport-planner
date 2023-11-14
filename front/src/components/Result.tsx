@@ -1,13 +1,13 @@
 import ErrorMessage from "./ErrorMessage"
 import RouteResult from "./RouteResult";
-import { ErrorType } from "../types";
+import { ErrorType, ResultType } from "../types";
 
 type ResultPropType = {
     error: ErrorType,
-    result: any
+    result: ResultType[],
 }
 
-const Result = ({error, result}: ResultPropType) => {
+const Result = ({ error, result }: ResultPropType) => {
     console.log(error.status);  // Test
     
     return (

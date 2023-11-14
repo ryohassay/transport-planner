@@ -1,0 +1,71 @@
+.subtitle {
+    font-size: larger;
+    padding: 1em 0em 1em 0em;
+}
+
+.result-box {
+    width: 90%;
+    padding: 10px 10px 10px 10px;
+    border: solid thin;
+    border-color: gray;
+}
+.route-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.station-row {
+    height: 3em;
+    vertical-align: middle;
+    background-color: #f0f0f0;
+}
+
+.time {
+    width: 10%;
+    text-align: center;
+}
+
+.time > ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.symbol {
+    width: 5%;
+    text-align: center;
+}
+
+.name {
+    width: 85%;
+}
+
+.circle {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    background-color: gray;
+    border-color: black;
+    border-width: 2px;
+    border-radius: 50%;
+}
+
+.transport-row {
+    height: 3em;
+    vertical-align: middle;
+    background-color: white;
+}
+
+.line {
+    text-align: center;
+}
+
+.line-color {
+    display: inline-block;
+    width: 0.7em;
+    height: 3em;
+}
+
+.total-fare {
+    font-size: large;
+    padding: 1em 0em 1em 0em;
+}
