@@ -3,13 +3,13 @@ export type ErrorType = {
     message: string,
 }
 
-type StationType = {
+export type StationType = {
     arr_tm: string | null,
     dep_tm: string | null,
     name: string
 }
 
-type TransportType = {
+export type TransportType = {
     color: string,
     name: string
 }

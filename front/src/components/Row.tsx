@@ -2,7 +2,7 @@ import { RowPropsType } from "../types";
 
 const Row = ({ station, transport }: RowPropsType) => {
     return (
-        <tbody>
+        <div>
             <tr className="station-row">
                 <td className="time">
                     <ul>
@@ -19,11 +19,11 @@ const Row = ({ station, transport }: RowPropsType) => {
                     <td className="time"></td>
                     <td className="line">
                         <span className="line-color" style={{backgroundColor: transport.color}}></span>
-                        <td className="transport">{transport.name}</td>
                     </td>
+                    <td className="transport">{transport.name}</td>
                 </tr>
             }
-        </tbody>
+        </div>
     );
 };
 

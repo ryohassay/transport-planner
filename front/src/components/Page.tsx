@@ -1,4 +1,5 @@
-import Row from "./Row";
+import Station from "./Station";
+import Transport from "./Transport";
 import { ResultPageType } from "../types";
 
 type PagePropsType = {
@@ -13,23 +14,28 @@ const Page = ({ page }: PagePropsType) => {
             <div className="fare">
                 運賃：{page.fare}円
             </div>
-            
+
             <table className="route-table">
-                {(() => {
-                    const size: number = page.transports.length;
-                    const rows = [];
-                    for(let i = 0; i < size; i++){
+                <tbody>
+                    {(() => {
+                        const size: number = page.transports.length;
+                        const rows = [];
+                        for(let i = 0; i < size; i++){
+                            rows.push(
+                                <Station station={page.stations[i]} />
+                            );
+                            rows.push(
+                                <Transport transport={page.transports[i]} />
+                            );
+                        }
+
                         rows.push(
-                            <Row station={page.stations[i]} transport={page.transports[i]} />
+                            <Station station={page.stations[size]} />
                         );
-                    }
 
-                    rows.push(
-                        <Row station={page.stations[size]} />
-                    );
-
-                    return rows;
-                })()}
+                        return rows;
+                    })()}
+                </tbody>
             </table>
         </div>
     );
