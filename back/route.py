@@ -157,7 +157,6 @@ class RouteInfo:
         for i in range(NUM_PAGES):
             stations_js = []
             for station in self.summaries[i].stations:
-                print(i, station)  # Test
                 station_js = {
                     'name': station.name,
                     'dep_tm': station.dep_tm,
@@ -181,7 +180,6 @@ class RouteInfo:
                 'transports': transports_js,
             }
 
-            print('Page ', i, page, '\n')  # Test
             pages.append(page)
 
         route_js = {

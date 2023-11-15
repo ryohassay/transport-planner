@@ -22,15 +22,15 @@ const Page = ({ page }: PagePropsType) => {
                         const rows = [];
                         for(let i = 0; i < size; i++){
                             rows.push(
-                                <Station station={page.stations[i]} />
+                                <Station station={page.stations[i]} key={"st-" + i} />
                             );
                             rows.push(
-                                <Transport transport={page.transports[i]} />
+                                <Transport transport={page.transports[i]} key={"tr-" + i} />
                             );
                         }
 
                         rows.push(
-                            <Station station={page.stations[size]} />
+                            <Station station={page.stations[size]} key={"st-" + size} />
                         );
 
                         return rows;

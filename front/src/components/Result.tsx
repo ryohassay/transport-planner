@@ -4,15 +4,15 @@ import { ErrorType, ResultType } from "../types";
 
 type ResultPropType = {
     error: ErrorType,
-    result: ResultType[],
+    results: ResultType[],
 }
 
-const Result = ({ error, result }: ResultPropType) => {
-    console.log(error.status);  // Test
+const Result = ({ error, results }: ResultPropType) => {
+    // console.log(error.status);  // Test
     
     return (
         <div className="result-container">
-            {error.status ? <ErrorMessage message={error.message} /> : <RouteResult results={result} />}
+            {error.status ? <ErrorMessage message={error.message} /> : <RouteResult results={results} />}
         </div>
     );
 };

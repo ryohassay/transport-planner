@@ -1,6 +1,36 @@
+:root {
+    --button-width: 25px;
+}
+
 .subtitle {
     font-size: larger;
     padding: 1em 0em 1em 0em;
+}
+
+/* .contents {
+    display: flex;
+} */
+
+.pages-wrapper {
+    width: calc(100vw - var(--button-width));
+}
+
+.pages {
+    display: flex;
+    width: 100%;
+    /* overflow-x: hidden; */
+    transition: transform 1s;
+} 
+
+.page {
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.page-button {
+    cursor: pointer;
+    text-align: center;
+    width: var(--button-width);
 }
 
 .result-box {
@@ -9,6 +39,7 @@
     border: solid thin;
     border-color: gray;
 }
+
 .route-table {
     width: 100%;
     border-collapse: collapse;

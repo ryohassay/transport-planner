@@ -14,7 +14,7 @@ function App() {
         status: false,
         message: "",
     });
-    const [result, setResult] = useState<ResultType[]>([]);
+    const [results, setResults] = useState<ResultType[]>([]);
 
     const route: RouteType = {
         origin: "",
@@ -37,14 +37,6 @@ function App() {
 
     const [speed, setSpeed] = useState<number | null>(2);  // 歩く速さ：少し速い
     const [order, setOrder] = useState<number | null>(0);  // 順番：到着順
-    const options = {
-        modes: modes,
-        setModes: setModes,
-        speed: speed,
-        setSpeed: setSpeed,
-        order: order,
-        setOrder: setOrder,
-    };
 
     const query = {
         routes: routes,
@@ -64,22 +56,23 @@ function App() {
                         status: true,
                         message: res.data.error_message
                     });
-                    console.log(res.data.error_message);
                 }
                 else{
                     setError({
                         status: false,
                         message: ""
                     });
-                    setResult(res.data.result); 
-                    console.log(res.data.result);
+                    setResults(res.data.result);
                 }
             })
             .then(() => setLoading(false))
-            .catch(err => console.log(err));
-        
-        console.log(response);  // Test
+            .catch(err => {
+                setError({status: true, message: err});
+                console.log(err);
+            });
     };
+
+    // console.log(results);  // Test
 
     const formProps: FormPropsType = {
         routes: routes,
@@ -95,12 +88,10 @@ function App() {
         handleSubmit: handleSubmit,
     };
 
-    // console.log(routes, waypoints, options);
-
     return (
         <div className="App">
             <Form {...formProps} />
-            {loading ? <Loading /> : <Result error={error} result={result} />}
+            {loading ? <Loading /> : <Result error={error} results={results} />}
         </div>
     );
 }

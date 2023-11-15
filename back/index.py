@@ -76,7 +76,7 @@ def result():
         
         routes_js.append(route_js)
 
-    # return render_template('index.html', routes=routes_js)
+    print(routes_js)
     return make_response(jsonify({
         'error': False,
         'result': routes_js
