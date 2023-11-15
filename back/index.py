@@ -63,7 +63,7 @@ def result():
     for i, route in enumerate(routes):
         route_waypoints = waypoints[NUM_WAYPOINTS * i : NUM_WAYPOINTS * (i + 1)]
         route_js = _search_transit(route, route_waypoints, modes, speed, order)  # Fix this function
-        print(route_js)  # Test
+        # print(route_js)  # Test
 
         if route_js is None:
             error_msg = '出発地または到着地が正しくありません。'

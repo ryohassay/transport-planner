@@ -92,24 +92,13 @@ class RouteSummary:
 
 
 class RouteInfo:
-    # def __init__(self, search: RouteSearch) -> None:
-    #     self.search = search
-
-    #     self.start: str = search.start
-    #     self.dest: str = search.dest
-
-    #     self.dep_tm = None
-    #     self.arr_tm = None
-    #     self.fare: int = None
-    #     self.stations: list[Station] = []
-    #     self.transports: list[Transport] = []
-
-
     def __init__(self, search: RouteSearch) -> None:
         self.search = search
         self.origin: str = search.origin
         self.destination: str = search.destination
-        self.summaries: list[RouteSummary] = [RouteSummary()] * NUM_PAGES
+        self.summaries: list[RouteSummary] = []
+        for i in range(NUM_PAGES):
+            self.summaries.append(RouteSummary())
 
 
     def get_summary(self) -> bool:
@@ -130,12 +119,14 @@ class RouteInfo:
     def _get_sta_htmls(self, page: int) -> list[element.Tag]:
         route_detail = self.search.soups[page].find('div', class_='routeDetail')
         sta_htmls = route_detail.find_all('div', class_='station')
+        # print('Page ', page, sta_htmls)  # Test
         return sta_htmls
 
 
     def _get_trpt_htmls(self, page: int) -> list[element.Tag]:
         route_detail = self.search.soups[page].find('div', class_='routeDetail')
         trpt_htmls = route_detail.find_all('li', class_='transport')
+        # print('Page ', page, trpt_htmls)  # Test
         return trpt_htmls
 
 
@@ -166,6 +157,7 @@ class RouteInfo:
         for i in range(NUM_PAGES):
             stations_js = []
             for station in self.summaries[i].stations:
+                print(i, station)  # Test
                 station_js = {
                     'name': station.name,
                     'dep_tm': station.dep_tm,
@@ -189,6 +181,7 @@ class RouteInfo:
                 'transports': transports_js,
             }
 
+            print('Page ', i, page, '\n')  # Test
             pages.append(page)
 
         route_js = {
@@ -199,11 +192,3 @@ class RouteInfo:
         }
 
         return route_js
-
-    # def show_detail(self):
-    #     if self.dep_tm and self.arr_tm and self.fare and self.stations and self.transports:
-    #         for station, transport in zip(self.stations, self.transports):
-    #             print('　　{}着\n{}\n　　{}発'.format(station.arr_tm, station.name, station.dep_tm))
-    #             print('　｜\n　｜　　{}\n　｜'.format(transport.name))
-    #         dest_sta = self.stations[len(self.stations) - 1]
-    #         print('　　{}着\n{}\n'.format(dest_sta.arr_tm, dest_sta.name))
