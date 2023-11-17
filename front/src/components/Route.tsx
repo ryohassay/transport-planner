@@ -39,8 +39,8 @@ const Route = ({ routeIndex, routes, setRoutes, waypoints, setWaypoints }: Route
 
     return (
         <div className="route">
-            <input type="text" name="origin" placeholder="出発駅・バス停・施設" onChange={e => updateState("origin", e.target.value)} />
-            <input type="text" name="destination" placeholder="到着駅・バス停・施設" onChange={e => updateState("destination", e.target.value)} />
+            <input type="text" name="origin" placeholder="出発駅・バス停・施設" onChange={e => updateState("origin", e.target.value)} required />
+            <input type="text" name="destination" placeholder="到着駅・バス停・施設" onChange={e => updateState("destination", e.target.value)} required />
             <input type="datetime-local" name="datetime" value={toISOStringInJpTime(routes[routeIndex].datetime)} onChange={e => updateState("datetime", new Date(e.target.value))} />
             
             <div className="radio-container">

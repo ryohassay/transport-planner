@@ -1,0 +1,225 @@
+:root {
+    --button-width: 25px;
+}
+
+header {
+    color: #3c4768;
+    /* background-color: #3f4b6e */
+    margin: 5px 25px
+}
+
+.App {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 100%;
+    min-height: 100vh;
+}
+
+#search {
+    width: 85%;
+    min-width: 600px;
+    margin: 0 auto;
+}
+
+.search-container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+/* ========================= Routes ========================= */
+.routes-container, .options-container {
+    margin: 10px 0;
+}
+
+.routes {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.route {
+    margin: 10px 0;
+    padding: 20px;
+    background-color: #dfe1e7;
+    border-radius: 10px;
+}
+
+.route > input {
+    margin: 1px;
+}
+
+/* ========================= Waypoints ========================= */
+.waypoint {
+    list-style-type: none;
+}
+
+.waypoint > li > dl {
+    display: flex;
+}
+
+.waypoint > li > dd {
+    margin-left: 20px;
+}
+
+/* ========================= Options ========================= */
+.options-container {
+    padding: 20px;
+    background-color: #e8e9ed;
+    border-radius: 10px;
+}
+
+.option-text {
+    width: 5em;
+}
+
+.option-label {
+    margin: 0 3px;
+}
+
+.submit-button {
+    width: 50%;
+    margin: 5px auto 40px auto;
+    transform: translateX(50%);
+    cursor: pointer;
+}
+
+/* ========================= Results ========================= */
+.route-result {
+    width: 90%;
+    margin: 5px auto;
+    padding: 3%;
+    background-color: #e8e9ed;
+    border-radius: 10px;
+}
+
+.subtitle {
+    font-size: larger;
+    /* padding: 1em 0em 1em 0em; */
+}
+
+.contents {
+    display: flex;
+    margin: 10px 0;
+}
+
+.pages-wrapper {
+    width: calc(100vw - var(--button-width));
+    overflow-x: hidden;
+}
+
+.pages {
+    display: flex;
+    width: 100%;
+    transition: transform 0.6s;
+} 
+
+.page {
+    flex-shrink: 0;
+    width: 100%;
+    padding: 5px;
+}
+
+.page-button {
+    cursor: pointer;
+    text-align: center;
+    width: var(--button-width);
+}
+
+.result-box {
+    width: 90%;
+    padding: 10px 10px 10px 10px;
+    border: solid thin;
+    border-color: gray;
+}
+
+.route-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.station-row {
+    height: 3em;
+    vertical-align: middle;
+    background-color: #f0f0f0;
+}
+
+.time {
+    width: 10%;
+    text-align: center;
+}
+
+.time > ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.symbol {
+    width: 5%;
+    text-align: center;
+}
+
+.name {
+    width: 85%;
+}
+
+.circle {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    background-color: gray;
+    border-color: black;
+    border-width: 2px;
+    border-radius: 50%;
+}
+
+.transport-row {
+    height: 3em;
+    vertical-align: middle;
+    /* background-color: white; */
+}
+
+.line {
+    text-align: center;
+}
+
+.line-color {
+    display: inline-block;
+    width: 0.7em;
+    height: 3em;
+}
+
+.total-fare {
+    font-size: large;
+    width: 90%;
+    margin: 25px auto;
+    padding: 3%;
+    background-color: #dfe1e7;
+    border-radius: 10px;
+}
+
+/* ========================= Fotter ========================= */
+footer {
+    color: #3c4768;
+    background-color: #e8e9ed;
+    width: 100%;
+    min-height: 60px;
+    /* padding: 10px; */
+    position: absolute;
+    bottom: 0;
+    /* top: 100vh; */
+    position: sticky;
+}
+
+#footer-title {
+    font-size: medium;
+    float: left;
+    margin: 5px;
+    padding: 15px 20px 15px 20px;
+}
+
+#copy-right {
+    font-size: small;
+    float: right;
+    margin: 5px;
+    padding: 15px 20px 15px 20px;
+}

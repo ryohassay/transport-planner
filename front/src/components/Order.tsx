@@ -17,11 +17,12 @@ const Order = ({ order, setOrder }: OrderPropsType) => {
     
     return (
         <div className="display-order-container">
-            {radioOptions.map((option) => (
-                <label key={option.value}>
+           {radioOptions.map((option) => (
+                <label key={option.value} className="option-label">
                     <input
                         type="radio"
                         value={option.value}
+                        checked={order === option.value}
                         name="display-order"
                         onChange={() => setOrder(option.value)}
                     />

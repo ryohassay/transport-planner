@@ -34,22 +34,26 @@ const Form = ({ routes, setRoutes, waypoints, setWaypoints, modes, setModes, spe
 
     return (
         <form id="search" onSubmit={handleSubmit}>
-            <ul className="routes">
-                {
-                    Array.from({length: routes.length}, (_, index) => {
-                        return (
-                            <li key={index}>
-                                <Route routeIndex={index} {...routeProps} />
-                            </li>
-                        );
-                    })
-                }
-            </ul>
+            <div className="search-container">
+                <div className="routes-container">
+                    <ul className="routes">
+                        {
+                            Array.from({length: routes.length}, (_, index) => {
+                                return (
+                                    <li key={index}>
+                                        <Route routeIndex={index} {...routeProps} />
+                                    </li>
+                                );
+                            })
+                        }
+                    </ul>
 
-            <button type="button" onClick={addRoutes} disabled={routes.length >= NUM_ROUTES}>経路を追加</button>
+                    <button type="button" onClick={addRoutes} disabled={routes.length >= NUM_ROUTES}>経路を追加</button>
+                </div>
 
-            <Option {...options}/>
-            <button form="search" type="submit">検索</button>
+                <Option {...options}/>
+            </div>
+            <button form="search" type="submit" className="submit-button">検索</button>
         </form>
     );
 };
