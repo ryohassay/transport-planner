@@ -3,14 +3,18 @@ import Transport from "./Transport";
 import { ResultPageType } from "../types";
 
 type PagePropsType = {
-    page: ResultPageType
+    page: ResultPageType,
+    index: number,
 }
 
-const Page = ({ page }: PagePropsType) => {
+const Page = ({ page, index }: PagePropsType) => {
     
     
     return (
         <div className="page">
+            <div className="page-title">
+                ルート {index + 1}
+            </div>
             <div className="fare">
                 運賃：{page.fare}円
             </div>

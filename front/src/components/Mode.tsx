@@ -32,7 +32,7 @@ const Mode = ({ modes, setModes }: ModePropsType) => {
     return (
         <div>
             {radioOptions.map((option) => (
-                <label key={option.value}>
+                <label key={option.value} className="option-label">
                     <input
                         type="checkbox"
                         value={option.value}

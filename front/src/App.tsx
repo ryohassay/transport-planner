@@ -2,9 +2,11 @@ import { useState } from "react"
 import axios from "axios";
 import "react-datetime/css/react-datetime.css";
 import './App.css';
+import Header from "./components/Header";
 import Form from "./components/Form";
 import Loading from "./components/Loading";
 import Result from "./components/Result";
+import Footer from "./components/Footer";
 import { ErrorType, ResultType, FormPropsType, RouteType, IdSetType, modesType, WaypointType } from "./types";
 import { NUM_ROUTES, NUM_WAYPOINTS } from "./consts";
 
@@ -90,8 +92,18 @@ function App() {
 
     return (
         <div className="App">
-            <Form {...formProps} />
-            {loading ? <Loading /> : <Result error={error} results={results} />}
+            <header>
+                <Header />
+            </header>
+
+            <main>
+                <Form {...formProps} />
+                {loading ? <Loading /> : <Result error={error} results={results} />}
+            </main>
+
+            <footer>
+                <Footer />
+            </footer>
         </div>
     );
 }

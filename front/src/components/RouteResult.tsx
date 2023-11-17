@@ -1,15 +1,17 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Page from "./Page";
 import RouteButton from "./RouteButton";
+import TotalFare from "./TotalFare";
 import { ResultType } from "../types";
 
 type RouteResultPropsType = {
     results: ResultType[],
 }
 
-const RouteResult = ({ results }: RouteResultPropsType) => {
-    const [selected, setSelected] = useState<number>(0);
 
+const RouteResult = ({ results }: RouteResultPropsType) => {
+    const [selectedIndeces, setSelectedIndeces] = useState<number[]>(new Array<number>(results.length).fill(0));
+    
     return (
         <div className="route-results-container">
             {results.map((result, i) => (
@@ -19,20 +21,24 @@ const RouteResult = ({ results }: RouteResultPropsType) => {
                     </div>
 
                     <div className="contents">
-                        <RouteButton isLeft={true} selected={selected} setSelected={setSelected} size={result.pages.length}/>
+                        <RouteButton isLeft={true} selectedIndeces={selectedIndeces} setSelectedIndeces={setSelectedIndeces} index={i} size={result.pages.length}/>
 
                         <div className="pages-wrapper">
-                            <div className="pages" style={{transform: `translateX(${- selected * 100}%)`}}>
+                            <div className="pages" style={{
+                                transform: `translateX(${- selectedIndeces[i] * 100}%)`
+                            }}>
                                 {result.pages.map((page, j) => (
-                                    <Page page={page} key={j}/>
+                                    <Page page={page} index={j} key={j}/>
                                 ))}
                             </div>
                         </div>
 
-                        <RouteButton isLeft={false} selected={selected} setSelected={setSelected} size={result.pages.length}/>
+                        <RouteButton isLeft={false} selectedIndeces={selectedIndeces} setSelectedIndeces={setSelectedIndeces} index={i} size={result.pages.length}/>
                     </div>
                 </div>
             ))}
+
+            {results.length === 0 ? "" : <TotalFare results={results} selectedIndeces={selectedIndeces}/>}
         </div>
     );
 };

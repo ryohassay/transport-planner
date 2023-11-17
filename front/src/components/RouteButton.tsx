@@ -1,54 +1,32 @@
-import { NUM_ROUTES } from "../consts";
-
 type RouteButtonType = {
     isLeft: boolean,  // True: left, false: right
-    selected: number,
-    setSelected: React.Dispatch<React.SetStateAction<number>>,
+    selectedIndeces: number[],
+    setSelectedIndeces: React.Dispatch<React.SetStateAction<number[]>>,
+    index: number,
     size: number,
 }
 
-// const RouteButton = ({ selected, setSelected, size }: RouteButtonType) => {
-//     const texts: string[] = [];
-//     for(let i = 0; i < size; i++){
-//         texts.push("経路" + (i + 1));
-//     }
-
-//     return (
-//         <div className="button-container">
-//             {texts.map((text, i) => 
-//                 <label key={i} className="button">
-//                     {text}
-//                     <input 
-//                         id={"route-button-" + i}
-//                         name="route-button"
-//                         type="radio"
-//                         checked={selected === i}
-//                         onChange={() => setSelected(i)}
-//                     />
-//                 </label>
-                
-//             )}
-//         </div>
-//     );
-// };
-
-const RouteButton = ({ isLeft, selected, setSelected, size }: RouteButtonType) => {
+const RouteButton = ({ isLeft, selectedIndeces, setSelectedIndeces, index, size }: RouteButtonType) => {
     const onClick = () => {
         if(isLeft){
-            setSelected(prev => prev - 1);
+            setSelectedIndeces(
+                selectedIndeces.map((selectedIndex, i) => (i === index ? selectedIndex - 1 : selectedIndex))
+            );
         }
         else{
-            setSelected(prev => prev + 1);
+            setSelectedIndeces(
+                selectedIndeces.map((selectedIndex, i) => (i === index ? selectedIndex + 1 : selectedIndex))
+            );
         }
     };
 
-    console.log(isLeft, selected, size); // Test
+    // console.log(isLeft, selectedIndeces, size); // Test
 
     return (
         <button
             className="page-button"
             onClick={onClick}
-            disabled={(isLeft && selected === 0) || (!isLeft && selected >= size - 1)}
+            disabled={(isLeft && selectedIndeces[index] === 0) || (!isLeft && selectedIndeces[index] >= size - 1)}
         >
             {isLeft ? "<" : ">"}
         </button>

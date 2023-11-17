@@ -21,7 +21,7 @@ const Speed = ({ speed, setSpeed }: SpeedPropType) => {
     return (
         <div>
             {radioOptions.map((option) => (
-                <label key={option.value}>
+                <label key={option.value} className="option-label">
                     <input
                         type="radio"
                         value={option.value}
