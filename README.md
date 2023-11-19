@@ -2,19 +2,28 @@
 複数の交通ルートを一気に検索できるWebアプリです。`transit-web`の改良版です。
 
 ## 準備
+### バックエンド
 ```
 pip install -r requirements.txt
 ```
 などで`requirements.txt`に記載のモジュールをインストールして下さい。
 
+### フロントエンド
+```
+cd front
+npm install
+npm run build
+```
+で必要なライブラリのインストールとアプリのビルドを行ってください。
+
 ## ローカルでのWebアプリ実行方法
 ```
-python index.py
+python back/index.py
 ```
 
 ### デバッグモード
 ```
-python index.py -d True
+python back/index.py -d True
 ```
 
 ### サーバーホストの指定
