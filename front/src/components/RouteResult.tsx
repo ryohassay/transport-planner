@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Page from "./Page";
 import RouteButton from "./RouteButton";
 import TotalFare from "./TotalFare";

@@ -1,7 +1,6 @@
-import { useState, useId } from "react";
 import Route from "./Route";
 import Option from "./Option";
-import { RouteType, modesType, FormPropsType } from "../types";
+import { RouteType, FormPropsType } from "../types";
 import { NUM_ROUTES } from "../consts";
 
 const Form = ({ routes, setRoutes, waypoints, setWaypoints, modes, setModes, speed, setSpeed, order, setOrder, handleSubmit }: FormPropsType) => {

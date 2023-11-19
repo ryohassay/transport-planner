@@ -26,18 +26,6 @@ NUM_PAGES = 3  # Number of search results (pages) per route
 
 
 class RouteSearch:
-    # def __init__(self, init_start: str, init_dest: str, init_tm: dt = None, init_tm_type: int = 5, init_options: List = None, init_page: int = 1) -> None:  # Legacy
-    #     self.start = init_start
-    #     self.dest = init_dest
-    #     self.tm = init_tm
-    #     self.tm_type = init_tm_type
-    #     self.options = init_options
-    #     self.page = init_page
-    #     self.url = None
-    #     self.soup = None
-    #     self.error = False
-
-
     def __init__(self, init_route: dict, init_route_waypoints: list[dict[str, bool]], init_modes: dict, init_speed: int, init_order: int) -> None:
         time_spec_dict = {'departure': 1, 'arrival': 4,'first': 3, 'last': 2, 'none': 5}
         

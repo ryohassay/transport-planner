@@ -1,4 +1,4 @@
-import { modesType, QueryType } from "../types";
+import { modesType } from "../types";
 
 type ModePropsType = {
     modes: modesType,
@@ -22,7 +22,7 @@ const Mode = ({ modes, setModes }: ModePropsType) => {
     ];
 
     const setMode = (key: (keyof modesType)) => {
-        console.log(key, !modes[key]);  // Test
+        // console.log(key, !modes[key]);  // Test
         setModes((prevModes) => ({
             ...prevModes,
             [key]: !(prevModes[key])
@@ -49,5 +49,3 @@ const Mode = ({ modes, setModes }: ModePropsType) => {
 };
 
 export default Mode;
-
-// &al=1&shin=1&ex=1&hb=1&lb=1&sr=1

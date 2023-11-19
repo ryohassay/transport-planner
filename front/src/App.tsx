@@ -1,13 +1,12 @@
 import { useState } from "react"
 import axios from "axios";
-import "react-datetime/css/react-datetime.css";
 import './App.css';
 import Header from "./components/Header";
 import Form from "./components/Form";
 import Loading from "./components/Loading";
 import Result from "./components/Result";
 import Footer from "./components/Footer";
-import { ErrorType, ResultType, FormPropsType, RouteType, IdSetType, modesType, WaypointType } from "./types";
+import { ErrorType, ResultType, FormPropsType, RouteType, modesType, WaypointType } from "./types";
 import { NUM_ROUTES, NUM_WAYPOINTS } from "./consts";
 
 function App() {
@@ -72,9 +71,9 @@ function App() {
                 setError({status: true, message: err});
                 console.log(err);
             });
+        
+        console.log(response);  // Test
     };
-
-    // console.log(results);  // Test
 
     const formProps: FormPropsType = {
         routes: routes,
