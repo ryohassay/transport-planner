@@ -4,6 +4,7 @@
 ## 準備
 ### バックエンド
 ```
+cd back
 pip install -r requirements.txt
 ```
 などで`requirements.txt`に記載のモジュールをインストールして下さい。
