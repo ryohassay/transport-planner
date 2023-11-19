@@ -1,5 +1,3 @@
-import { QueryType } from "../types";
-
 type SpeedPropType = {
     speed: number | null,
     setSpeed: React.Dispatch<React.SetStateAction<number | null>>

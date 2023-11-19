@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
 import { ResultType } from "../types";
-import { DELAY_SEC } from "../consts";
 
 type TotalFarePropsType = {
     results: ResultType[],

@@ -1,5 +1,3 @@
-import Datetime from "react-datetime";
-import ja  from "moment";
 import { RoutePropsType, TimeSpecType } from "../types";
 import Waypoint from "./Waypoint";
 
@@ -17,7 +15,7 @@ const Route = ({ routeIndex, routes, setRoutes, waypoints, setWaypoints }: Route
         {value: "none", text: "指定なし"}, 
     ];
 
-    const keys = Object.keys(routes);
+    // const keys = Object.keys(routes);
 
     const toISOStringInJpTime = (datetime: Date): string => {
         let text = datetime.toLocaleString("sv-SE", { timeZone: 'Asia/Tokyo' }).replace(" ", "T");  // Locale sv-SE (Swedish (Sweden)) is the same as ISO format

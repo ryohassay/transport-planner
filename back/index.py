@@ -1,6 +1,4 @@
-from flask import Flask, Response, render_template, request, send_from_directory, jsonify, make_response
-from datetime import datetime as dt
-from datetime import time as tm
+from flask import Flask, Response, render_template, request, jsonify, make_response
 from flask_cors import CORS
 
 from route import RouteSearch, RouteInfo
@@ -45,24 +43,20 @@ def _search_transit(route: list[dict], route_waypoints: list[dict], modes: dict,
 
 @app.route('/')
 def index():
-    return render_template('index.html', error_msg=None)
-
-# @app.route('/')
-# def index():
-#     return send_from_directory('../front', 'public/index.html')
+    return render_template('index.html')
 
 
 @app.route('/', methods=['post'])
 def result():
     query = request.get_json()
-    print(query)  # Test
+    # print(query)  # Test
 
     routes, waypoints, modes, speed, order = [query.get(key) for key in query.keys()]
 
     routes_js: list[dict] = []
     for i, route in enumerate(routes):
         route_waypoints = waypoints[NUM_WAYPOINTS * i : NUM_WAYPOINTS * (i + 1)]
-        route_js = _search_transit(route, route_waypoints, modes, speed, order)  # Fix this function
+        route_js = _search_transit(route, route_waypoints, modes, speed, order)
         # print(route_js)  # Test
 
         if route_js is None:

@@ -7,12 +7,10 @@ const Waypoint = ({ routeIndex, waypoints, setWaypoints }: WaypointPropsType) =>
     const [waypointCount, setWaypointCount] = useState<number>(0);
     
     const setWaypoint = (index: number, value: string) => {
-        console.log(NUM_WAYPOINTS * routeIndex + index);  // Test
+        // console.log(NUM_WAYPOINTS * routeIndex + index);  // Test
         
         setWaypoints(waypoints.map((waypoint, i) => (i === NUM_WAYPOINTS * routeIndex + index ? {
-            // id: waypoint.id,
             text: value,
-            // routeId: waypoint.routeId
         } : waypoint)));
     };
     
