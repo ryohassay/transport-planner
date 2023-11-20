@@ -12,7 +12,7 @@ NUM_PAGES = 3  # Number of search results (pages) per route
 app = Flask(__name__, template_folder='../front/build', static_folder='../front/build',  static_url_path='/')
 # app.add_url_rule('/', 'root', lambda: app.send_static_file('index.html'))
 # CORS(app, origins="http://localhost:3000")
-CORS(app, origins='http://localhost:5000')
+# CORS(app, origins='http://0.0.0.0:8080')
 # CORS(app)
 
 @app.after_request
