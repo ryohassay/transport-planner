@@ -64,7 +64,7 @@ class RouteSearch:
 
             # Find error from the HTML code
             title = soup.head.find('title').get_text()
-            print(soup)  # Test
+            # print(soup)  # Test
             if title == '乗換案内、時刻表、運行情報 - Yahoo!路線情報':
                 self.errors[i] = True
             
