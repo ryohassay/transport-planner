@@ -4,12 +4,13 @@ from flask_cors import CORS
 from route import RouteSearch, RouteInfo
 from arg_parser import Parser
 
+FRONT_DIR = '../front/build'
 NUM_WAYPOINTS = 3  # Number of waypoints per route
 NUM_PAGES = 3  # Number of search results (pages) per route
 
 
 # app = Flask(__name__, template_folder='../front/build', static_folder='../front/build/static')
-app = Flask(__name__, template_folder='../front/build', static_folder='../front/build',  static_url_path='/')
+app = Flask(__name__, template_folder=FRONT_DIR, static_folder=FRONT_DIR,  static_url_path='/')
 # app.add_url_rule('/', 'root', lambda: app.send_static_file('index.html'))
 # CORS(app, origins="http://localhost:3000")
 # CORS(app, origins='http://0.0.0.0:8080')
