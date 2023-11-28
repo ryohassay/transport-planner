@@ -68,7 +68,7 @@ def result():
         
         routes_js.append(route_js)
 
-    print(routes_js)
+    # print(routes_js)  # Test
     return make_response(jsonify({
         'error': False,
         'result': routes_js
