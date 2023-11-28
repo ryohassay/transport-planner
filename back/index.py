@@ -9,12 +9,9 @@ NUM_WAYPOINTS = 3  # Number of waypoints per route
 NUM_PAGES = 3  # Number of search results (pages) per route
 
 
-# app = Flask(__name__, template_folder='../front/build', static_folder='../front/build/static')
 app = Flask(__name__, template_folder=FRONT_DIR, static_folder=FRONT_DIR,  static_url_path='/')
-# app.add_url_rule('/', 'root', lambda: app.send_static_file('index.html'))
-# CORS(app, origins="http://localhost:3000")
-# CORS(app, origins='http://0.0.0.0:8080')
-# CORS(app)
+CORS(app, origins="http://localhost:5000")
+
 
 @app.after_request
 def after_request(response: Response):
@@ -53,8 +50,6 @@ def index():
 @app.route('/', methods=['post'])
 def result():
     query = request.get_json()
-    # print(query)  # Test
-
     routes, waypoints, modes, speed, order = [query.get(key) for key in query.keys()]
 
     routes_js: list[dict] = []
@@ -65,7 +60,6 @@ def result():
 
         if route_js is None:
             error_msg = '出発地または到着地が正しくありません。'
-            # return render_template('index.html', error_msg=error_msg)
             return make_response(jsonify({
                 'error': True,
                 'error_message': error_msg
