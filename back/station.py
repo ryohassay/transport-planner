@@ -24,9 +24,11 @@ class Station:
                 elif sta_status == '到着駅':
                     self.arr_tm = times[0]
                 else:
-                    raise ValueError('Function could not get deperture or arrival time properly.')
+                    # raise ValueError('Function could not get deperture or arrival time properly.')
+                    print('Function could not get deperture or arrival time properly.')
             elif len(times) == 2:
                 self.arr_tm = times[0].replace('着', '')
                 self.dep_tm = times[1].replace('発', '')
             else:
-                raise ValueError('Function could not get deperture and arrival time properly.')
+                # raise ValueError('Function could not get deperture and arrival time properly.')
+                print('Function could not get deperture and arrival time properly.')

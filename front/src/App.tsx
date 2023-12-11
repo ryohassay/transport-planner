@@ -50,7 +50,8 @@ function App() {
     const handleSubmit= (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
-        const response = axios.post("http://127.0.0.1:5000", query)
+        
+        const response = axios.post("https://transport-planner.fly.dev", query)
             .then((res) => {
                 if(res.data.error){
                     setError({
@@ -66,11 +67,12 @@ function App() {
                     setResults(res.data.result);
                 }
             })
-            .then(() => setLoading(false))
             .catch(err => {
-                setError({status: true, message: err});
+                setError({status: true, message: err.message});
+                alert("エラーが発生しました。ページをリロードして、もう一度トライしてください。");
                 console.log(err);
-            });
+            })
+            .finally(()=> setLoading(false));
         
         console.log(response);  // Test
     };

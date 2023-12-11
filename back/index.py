@@ -4,21 +4,20 @@ from flask_cors import CORS
 from route import RouteSearch, RouteInfo
 from arg_parser import Parser
 
+FRONT_DIR = '../front/build'
 NUM_WAYPOINTS = 3  # Number of waypoints per route
 NUM_PAGES = 3  # Number of search results (pages) per route
 
 
-# app = Flask(__name__, template_folder='../front/build', static_folder='../front/build/static')
-app = Flask(__name__, template_folder='../front/build', static_folder='../front/build',  static_url_path='/')
-# app.add_url_rule('/', 'root', lambda: app.send_static_file('index.html'))
-# CORS(app, origins="http://localhost:3000")
-CORS(app, origins='http://localhost:5000')
+app = Flask(__name__, template_folder=FRONT_DIR, static_folder=FRONT_DIR,  static_url_path='/')
+CORS(app, origins=['http://localhost:5000', 'https://transport-planner.fly.dev'])
 # CORS(app)
+
 
 @app.after_request
 def after_request(response: Response):
-    # response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
-    # response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+    # response.headers.add('Access-Control-Allow-Origin', 'http://localhost:5000')  # Test
+    # response.headers.add('Access-Control-Allow-Headers', 'Content-Type')  # Test
     response.headers.add('Access-Control-Allow-Methods', 'GET,POST')
     return response
 
@@ -52,8 +51,6 @@ def index():
 @app.route('/', methods=['post'])
 def result():
     query = request.get_json()
-    # print(query)  # Test
-
     routes, waypoints, modes, speed, order = [query.get(key) for key in query.keys()]
 
     routes_js: list[dict] = []
@@ -64,7 +61,6 @@ def result():
 
         if route_js is None:
             error_msg = '出発地または到着地が正しくありません。'
-            # return render_template('index.html', error_msg=error_msg)
             return make_response(jsonify({
                 'error': True,
                 'error_message': error_msg
@@ -73,7 +69,7 @@ def result():
         
         routes_js.append(route_js)
 
-    print(routes_js)
+    # print(routes_js)  # Test
     return make_response(jsonify({
         'error': False,
         'result': routes_js

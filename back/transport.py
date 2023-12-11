@@ -15,5 +15,11 @@ class Transport:
         if '[lineWalk]' in trpt_html.get_text():
             self.color = trpt_html.find('span', class_='lineWalk')['style'].replace('border-left-color:', '')
             self.name = trpt_html.get_text().replace('[lineWalk]', '')
+        elif '[lineAir]' in trpt_html.get_text():
+            self.color = trpt_html.find('span', class_='lineAir')['style'].replace('border-left-color:', '')
+            self.name = trpt_html.get_text().replace('[lineAir]', '')
         else:
-            self.color = trpt_html.find('span', class_='line')['style'].replace('border-left-color:', '')
+            try:
+                self.color = trpt_html.find('span', class_='line')['style'].replace('border-left-color:', '')
+            except TypeError:
+                self.color = ''
