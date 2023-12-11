@@ -51,7 +51,7 @@ function App() {
         e.preventDefault();
         setLoading(true);
         
-        const response = axios.post("https://transport-planner.fly.dev", query)
+        const response = axios.post(process.env.REACT_APP_ADDRESS, query)
             .then((res) => {
                 if(res.data.error){
                     setError({

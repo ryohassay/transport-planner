@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from flask import Flask, Response, render_template, request, jsonify, make_response
 from flask_cors import CORS
 

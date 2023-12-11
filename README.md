@@ -3,6 +3,7 @@
 
 ## 準備
 ### バックエンド
+`back`に`.env`を置き、
 ```
 cd back
 pip install -r requirements.txt
@@ -10,6 +11,7 @@ pip install -r requirements.txt
 などで`requirements.txt`に記載のモジュールをインストールして下さい。
 
 ### フロントエンド
+`front`に`.env`や`.env.development`、`.env.production`などの環境変数ファイルを置いた後、
 ```
 cd front
 npm install
