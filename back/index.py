@@ -10,13 +10,14 @@ NUM_PAGES = 3  # Number of search results (pages) per route
 
 
 app = Flask(__name__, template_folder=FRONT_DIR, static_folder=FRONT_DIR,  static_url_path='/')
-CORS(app, origins="http://localhost:5000")
+CORS(app, origins=['http://localhost:5000', 'https://transport-planner.fly.dev'])
+# CORS(app)
 
 
 @app.after_request
 def after_request(response: Response):
-    # response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
-    # response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+    # response.headers.add('Access-Control-Allow-Origin', 'http://localhost:5000')  # Test
+    # response.headers.add('Access-Control-Allow-Headers', 'Content-Type')  # Test
     response.headers.add('Access-Control-Allow-Methods', 'GET,POST')
     return response
 

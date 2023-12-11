@@ -50,8 +50,8 @@ function App() {
     const handleSubmit= (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
-        const response = axios.post("http://127.0.0.1:5000", query)
-        // const response = axios.post("http://localhost:5000", query)
+        
+        const response = axios.post("https://transport-planner.fly.dev", query)
             .then((res) => {
                 if(res.data.error){
                     setError({
