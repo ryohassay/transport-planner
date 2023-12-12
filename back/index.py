@@ -1,3 +1,4 @@
+import os
 from dotenv import load_dotenv
 from flask import Flask, Response, render_template, request, jsonify, make_response
 from flask_cors import CORS
@@ -9,10 +10,10 @@ FRONT_DIR = '../front/build'
 NUM_WAYPOINTS = 3  # Number of waypoints per route
 NUM_PAGES = 3  # Number of search results (pages) per route
 
+load_dotenv()
 
 app = Flask(__name__, template_folder=FRONT_DIR, static_folder=FRONT_DIR,  static_url_path='/')
-CORS(app, origins=['http://localhost:5000', 'https://transport-planner.fly.dev'])
-# CORS(app)
+CORS(app, origins=['http://localhost:5000', os.environ['ADRESS']])
 
 
 @app.after_request
